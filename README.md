@@ -33,10 +33,10 @@ https://rickandmortyapi.com/api/
 
 ### Locations Schema:
 
-| location_id | name | type | dimension | created_at |
+| location_id | name | type | dimension | url |created_at |
 |----|----|----|----|----|
-| SERIAL PRIMARY KEY | string VARCHAR | string VARCHAR | string VARCHAR | timestamp |
-| The id of the location | The name of the location | The type of the location | The dimension of the location | Time at which the location was created in the database |
+| SERIAL PRIMARY KEY | string VARCHAR | string VARCHAR | string VARCHAR | string VARCHAR | timestamp |
+| The id of the location | The name of the location | The type of the location | The dimension of the location | The url of the location | Time at which the location was created in the database |
 
 ### Locations endpoints:
 
@@ -57,10 +57,10 @@ GET /api/locations/?dimension=C-137
 
 ### Characters Schema:
 
-| character_id | name | status | species | gender | origin | location | first_episode | created_at |
+| character_id | name | status | species | type | gender | origin | location | image | url | created_at |
 |----|----|----|----|----|----|----|----|----|
-| SERIAL PRIMARY KEY | string VARCHAR | string VARCHAR | string VARCHAR | string VARCHAR | integer REFERENCES locations.location_id | integer REFERENCES locations.location_id | integer REFERENCES episodes.episode_id | timestamp |
-| The id of the character | The name of the character | The status of the character ('Alive', 'Dead' or 'unknown') | The species of the character | The gender of the character ('Female', 'Male', 'Genderless' or 'unknown') | The character's origin location | The character's last known location | The character's first episode | Time at which the character was created in the database |
+| SERIAL PRIMARY KEY | string VARCHAR | string VARCHAR | string VARCHAR | string VARCHAR | string VARCHAR | string REFERENCES locations.name | string REFERENCES locations.name | string | string | timestamp |
+| The id of the character | The name of the character | The status of the character ('Alive', 'Dead' or 'unknown') | The species of the character | The type of the character | The gender of the character ('Female', 'Male', 'Genderless' or 'unknown') | The character's origin location | The character's last known location | The character's image url | The characters url | Time at which the character was created in the database |
 
 ### Characters endpoints:
 
@@ -84,10 +84,10 @@ GET /api/characters/?gender=female
 
 ### Episodes Schema:
 
-| episode_id | name | air_date | characters | created | 
+| episode_id | number | name | air_date | episode | created | 
 |----|----|----|----|----|
-| SERIAL PRIMARY KEY | string VARCHAR | string VARCHAR | object REFERENCES characters | timestamp |
-| The id of the episode | The name of the episode | The air date of the episode | A list of the characters in the episode | Time at which the episode was created in the database |
+| SERIAL PRIMARY KEY | integer | string VARCHAR | string VARCHAR | string VARCHAR | timestamp |
+| The id of the episode | The number of the episode | The name of the episode | The air date of the episode | A series and episodes in traditional T.V. format | Time at which the episode was created in the database |
 
 ### Episodes endpoints:
 
