@@ -81,5 +81,27 @@ describe('filterArrayObj', () => {
             },
         ];
         expect(actual).toEqual(expected);
-    })
+    });
+    it('doesn\'t mutate the original array', () => {
+        const arr = [
+            { shop_name: 'shop-b', owner: 'firstname-b', slogan: 'slogan-b' }
+        ];
+        const removeFromArr = "owner";
+        filterArrayObj(arr, removeFromArr);
+        const arrCopy = [
+            { shop_name: 'shop-b', owner: 'firstname-b', slogan: 'slogan-b' }
+        ];
+        expect(arr).toEqual(arrCopy);
+    });
+    it('returns a new array', () => {
+        const arr = [
+            { shop_name: 'shop-b', owner: 'firstname-b', slogan: 'slogan-b' }
+        ];
+        const removeFromArr = "owner";
+        const actual = filterArrayObj(arr, removeFromArr);
+        const expected = [
+            { shop_name: 'shop-b', owner_id: 1, slogan: 'slogan-b' }
+        ];
+        expect(actual[0]).not.toBe(arr[0]);
+    });
 })
