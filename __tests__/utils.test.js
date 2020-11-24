@@ -1,11 +1,10 @@
-const { expect } = require('@jest/globals');
-const { filterArrayObj } = require('../db/utils/utils');
+const { filterArrayObj, renameKey } = require('../db/utils/utils');
 
 describe('filterArrayObj', () => {
     it('returns an empty array when passed an empty array', () => {
         const episodesArr = [];
         const keyToRemove = 'characters';
-        const actual = filterArrayObj(episodesArr, keyToRemove);
+        const actual = filterArrayObj(episodesArr, keyToRemove, 'id', 'created');
         const expected = [];
         expect(actual).toEqual(expected);
     });
@@ -54,30 +53,24 @@ describe('filterArrayObj', () => {
             },
         ];
         const keyToRemove = 'characters';
-        const actual = filterArrayObj(episodesArr, keyToRemove);
+        const actual = filterArrayObj(episodesArr, keyToRemove, 'id', 'created');
         const expected = [{
-                id: 18,
                 name: "Big Trouble in Little Sanchez",
                 air_date: "September 13, 2015",
                 episode: "S02E07",
                 url: "https://rickandmortyapi.com/api/episode/18",
-                created: "2017-11-10T12:56:35.569Z",
             },
             {
-                id: 19,
                 name: "Interdimensional Cable 2: Tempting Fate",
                 air_date: "September 20, 2015",
                 episode: "S02E08",
                 url: "https://rickandmortyapi.com/api/episode/19",
-                created: "2017-11-10T12:56:35.669Z",
             },
             {
-                id: 20,
                 name: "Look Who's Purging Now",
                 air_date: "September 27, 2015",
                 episode: "S02E09",
                 url: "https://rickandmortyapi.com/api/episode/20",
-                created: "2017-11-10T12:56:35.772Z",
             },
         ];
         expect(actual).toEqual(expected);
@@ -87,7 +80,7 @@ describe('filterArrayObj', () => {
             { shop_name: 'shop-b', owner: 'firstname-b', slogan: 'slogan-b' }
         ];
         const removeFromArr = "owner";
-        filterArrayObj(arr, removeFromArr);
+        filterArrayObj(arr, removeFromArr, 'shop_name', 'slogan');
         const arrCopy = [
             { shop_name: 'shop-b', owner: 'firstname-b', slogan: 'slogan-b' }
         ];
@@ -98,10 +91,113 @@ describe('filterArrayObj', () => {
             { shop_name: 'shop-b', owner: 'firstname-b', slogan: 'slogan-b' }
         ];
         const removeFromArr = "owner";
-        const actual = filterArrayObj(arr, removeFromArr);
+        const actual = filterArrayObj(arr, removeFromArr, 'shop_name', 'slogan');
         const expected = [
             { shop_name: 'shop-b', owner_id: 1, slogan: 'slogan-b' }
         ];
         expect(actual[0]).not.toBe(arr[0]);
     });
+
+    describe('renameKey', () => {
+        it('returns an empty array when passed an empty array', () => {
+            const episodesArr = [];
+            const keyToRename = 'id';
+            const newName = 'number';
+            const actual = renameKey(episodesArr, keyToRename, newName);
+            const expected = [];
+            expect(actual).toEqual(expected);
+        });
+        it('renames the specified key in the object', () => {
+            const episodesArr = [{
+                    id: 18,
+                    name: "Big Trouble in Little Sanchez",
+                    air_date: "September 13, 2015",
+                    episode: "S02E07",
+                    characters: [
+                        "https://rickandmortyapi.com/api/character/1",
+                        "https://rickandmortyapi.com/api/character/2",
+                        "https://rickandmortyapi.com/api/character/3",
+                    ],
+                    url: "https://rickandmortyapi.com/api/episode/18",
+                    created: "2017-11-10T12:56:35.569Z",
+                },
+                {
+                    id: 19,
+                    name: "Interdimensional Cable 2: Tempting Fate",
+                    air_date: "September 20, 2015",
+                    episode: "S02E08",
+                    characters: [
+                        "https://rickandmortyapi.com/api/character/1",
+                        "https://rickandmortyapi.com/api/character/2",
+                        "https://rickandmortyapi.com/api/character/3",
+                        "https://rickandmortyapi.com/api/character/4",
+                        "https://rickandmortyapi.com/api/character/5",
+                        "https://rickandmortyapi.com/api/character/23"
+                    ],
+                    url: "https://rickandmortyapi.com/api/episode/19",
+                    created: "2017-11-10T12:56:35.669Z",
+                },
+                {
+                    id: 20,
+                    name: "Look Who's Purging Now",
+                    air_date: "September 27, 2015",
+                    episode: "S02E09",
+                    characters: [
+                        "https://rickandmortyapi.com/api/character/1",
+                        "https://rickandmortyapi.com/api/character/2",
+                        "https://rickandmortyapi.com/api/character/3"
+                    ],
+                    url: "https://rickandmortyapi.com/api/episode/20",
+                    created: "2017-11-10T12:56:35.772Z",
+                },
+            ];
+            const keyToRename = 'id';
+            const newName = 'number';
+            const actual = renameKey(episodesArr, keyToRename, newName);
+            const expected = [{
+                    number: 18,
+                    name: "Big Trouble in Little Sanchez",
+                    air_date: "September 13, 2015",
+                    episode: "S02E07",
+                    characters: [
+                        "https://rickandmortyapi.com/api/character/1",
+                        "https://rickandmortyapi.com/api/character/2",
+                        "https://rickandmortyapi.com/api/character/3",
+                    ],
+                    url: "https://rickandmortyapi.com/api/episode/18",
+                    created: "2017-11-10T12:56:35.569Z",
+                },
+                {
+                    number: 19,
+                    name: "Interdimensional Cable 2: Tempting Fate",
+                    air_date: "September 20, 2015",
+                    episode: "S02E08",
+                    characters: [
+                        "https://rickandmortyapi.com/api/character/1",
+                        "https://rickandmortyapi.com/api/character/2",
+                        "https://rickandmortyapi.com/api/character/3",
+                        "https://rickandmortyapi.com/api/character/4",
+                        "https://rickandmortyapi.com/api/character/5",
+                        "https://rickandmortyapi.com/api/character/23"
+                    ],
+                    url: "https://rickandmortyapi.com/api/episode/19",
+                    created: "2017-11-10T12:56:35.669Z",
+                },
+                {
+                    number: 20,
+                    name: "Look Who's Purging Now",
+                    air_date: "September 27, 2015",
+                    episode: "S02E09",
+                    characters: [
+                        "https://rickandmortyapi.com/api/character/1",
+                        "https://rickandmortyapi.com/api/character/2",
+                        "https://rickandmortyapi.com/api/character/3"
+                    ],
+                    url: "https://rickandmortyapi.com/api/episode/20",
+                    created: "2017-11-10T12:56:35.772Z",
+                },
+            ];
+            expect(actual).toEqual(expected);
+        })
+    })
 })

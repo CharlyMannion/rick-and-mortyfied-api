@@ -3,6 +3,8 @@ const {
     characterData,
     episodeData,
 } = require('../data/index.js');
+const { filterArrayObj, renameKey } = require('../utils/utils');
+
 
 exports.seed = function(knex) {
     // add seeding functionality here
@@ -13,8 +15,10 @@ exports.seed = function(knex) {
         })
         .then(() => {
             console.log("LET\'S GET SEEDY!");
+            const renameId = renameKey(episodeData, 'id', 'number');
+            const formattedEpisodesData = filterArrayObj(renameId, 'characters', 'created');
             return knex('episodes')
-                .insert(episodeData)
+                .insert(formattedEpisodesData)
                 .returning('*')
                 .then((insertedEpisodes) => {
                     console.log(insertedEpisodes);
