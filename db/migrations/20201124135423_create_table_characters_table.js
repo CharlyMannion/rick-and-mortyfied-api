@@ -7,10 +7,10 @@ exports.up = function(knex) {
         charactersTable.string('species').notNullable();
         charactersTable.string('type').notNullable();
         charactersTable.string('gender').notNullable();
-        charactersTable.string('origin').references('locations.name').notNullable();
-        charactersTable.string('location').references('locations.name').notNullable();
+        charactersTable.string('origin').notNullable();
+        charactersTable.string('location').notNullable();
         charactersTable.string('image').notNullable();
-        charactersTable.string('ur;').notNullable();
+        charactersTable.string('url').notNullable();
         charactersTable.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
     })
 };

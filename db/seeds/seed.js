@@ -33,4 +33,15 @@ exports.seed = function(knex) {
                     console.log(insertedLocations);
                 })
         })
+        .then(() => {
+            const formattedCharacterData = filterArrayObj(characterData, 'id', 'episode', 'created');
+            const getOriginName = getName(formattedCharacterData, 'origin');
+            const getLocationName = getName(getOriginName, 'location');
+            return knex('characters')
+                .insert(getLocationName)
+                .returning('*')
+                .then((insertedCharacters) => {
+                    console.log(insertedCharacters);
+                })
+        })
 };

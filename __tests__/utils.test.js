@@ -1,3 +1,4 @@
+const { expect } = require('@jest/globals');
 const { filterArrayObj, renameKey, getName } = require('../db/utils/utils');
 
 describe('filterArrayObj', () => {
@@ -255,5 +256,123 @@ describe('filterArrayObj', () => {
             ];
             expect(actual[0]).not.toBe(arr[0]);
         });
+        it('gets the name property from the specified object and makes that the new value of the specified key', () => {
+            const arr = [{
+                    id: 7,
+                    name: "Abradolf Lincler",
+                    status: "unknown",
+                    species: "Human",
+                    type: "Genetic experiment",
+                    gender: "Male",
+                    origin: {
+                        name: "Earth (Replacement Dimension)",
+                        url: "https://rickandmortyapi.com/api/location/20",
+                    },
+                    location: {
+                        name: "Testicle Monster Dimension",
+                        url: "https://rickandmortyapi.com/api/location/21",
+                    },
+                    image: "https://rickandmortyapi.com/api/character/avatar/7.jpeg",
+                    episode: [
+                        "https://rickandmortyapi.com/api/episode/10",
+                        "https://rickandmortyapi.com/api/episode/11",
+                    ],
+                    url: "https://rickandmortyapi.com/api/character/7",
+                    created: "2017-11-04T19:59:20.523Z",
+                },
+                {
+                    id: 8,
+                    name: "Adjudicator Rick",
+                    status: "Dead",
+                    species: "Human",
+                    type: "",
+                    gender: "Male",
+                    origin: { name: "unknown", url: "" },
+                    location: {
+                        name: "Citadel of Ricks",
+                        url: "https://rickandmortyapi.com/api/location/3",
+                    },
+                    image: "https://rickandmortyapi.com/api/character/avatar/8.jpeg",
+                    episode: ["https://rickandmortyapi.com/api/episode/28"],
+                    url: "https://rickandmortyapi.com/api/character/8",
+                    created: "2017-11-04T20:03:34.737Z",
+                },
+                {
+                    id: 9,
+                    name: "Agency Director",
+                    status: "Dead",
+                    species: "Human",
+                    type: "",
+                    gender: "Male",
+                    origin: {
+                        name: "Earth (Replacement Dimension)",
+                        url: "https://rickandmortyapi.com/api/location/20",
+                    },
+                    location: {
+                        name: "Earth (Replacement Dimension)",
+                        url: "https://rickandmortyapi.com/api/location/20",
+                    },
+                    image: "https://rickandmortyapi.com/api/character/avatar/9.jpeg",
+                    episode: ["https://rickandmortyapi.com/api/episode/24"],
+                    url: "https://rickandmortyapi.com/api/character/9",
+                    created: "2017-11-04T20:06:54.976Z",
+                }
+            ];
+            const keyTarget = "location";
+            const actual = getName(arr, keyTarget);
+            const expected = [{
+                    id: 7,
+                    name: "Abradolf Lincler",
+                    status: "unknown",
+                    species: "Human",
+                    type: "Genetic experiment",
+                    gender: "Male",
+                    origin: {
+                        name: "Earth (Replacement Dimension)",
+                        url: "https://rickandmortyapi.com/api/location/20",
+                    },
+                    location: "Testicle Monster Dimension",
+                    image: "https://rickandmortyapi.com/api/character/avatar/7.jpeg",
+                    episode: [
+                        "https://rickandmortyapi.com/api/episode/10",
+                        "https://rickandmortyapi.com/api/episode/11",
+                    ],
+                    url: "https://rickandmortyapi.com/api/character/7",
+                    created: "2017-11-04T19:59:20.523Z",
+                },
+                {
+                    id: 8,
+                    name: "Adjudicator Rick",
+                    status: "Dead",
+                    species: "Human",
+                    type: "",
+                    gender: "Male",
+                    origin: { name: "unknown", url: "" },
+                    location: "Citadel of Ricks",
+                    image: "https://rickandmortyapi.com/api/character/avatar/8.jpeg",
+                    episode: ["https://rickandmortyapi.com/api/episode/28"],
+                    url: "https://rickandmortyapi.com/api/character/8",
+                    created: "2017-11-04T20:03:34.737Z",
+                },
+                {
+                    id: 9,
+                    name: "Agency Director",
+                    status: "Dead",
+                    species: "Human",
+                    type: "",
+                    gender: "Male",
+                    origin: {
+                        name: "Earth (Replacement Dimension)",
+                        url: "https://rickandmortyapi.com/api/location/20",
+                    },
+                    location: "Earth (Replacement Dimension)",
+                    image: "https://rickandmortyapi.com/api/character/avatar/9.jpeg",
+                    episode: ["https://rickandmortyapi.com/api/episode/24"],
+                    url: "https://rickandmortyapi.com/api/character/9",
+                    created: "2017-11-04T20:06:54.976Z",
+                }
+            ];
+            expect(actual).toEqual(expected);
+        })
     })
 })

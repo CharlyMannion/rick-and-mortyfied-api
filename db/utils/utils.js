@@ -22,6 +22,7 @@ const renameKey = (arr, keyToRename, newName) => {
 const getName = (arr, keyTarget) => {
     const newArr = arr.map(x => ({...x }));
     const returnArr = newArr.map(element => {
+        element[keyTarget] = element[keyTarget].name;
         return element;
     })
     return returnArr;
