@@ -13,5 +13,11 @@ exports.seed = function(knex) {
         })
         .then(() => {
             console.log("LET\'S GET SEEDY!");
+            return knex('episodes')
+                .insert(episodeData)
+                .returning('*')
+                .then((insertedEpisodes) => {
+                    console.log(insertedEpisodes);
+                })
         })
 };
