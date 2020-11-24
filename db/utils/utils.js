@@ -17,6 +17,14 @@ const renameKey = (arr, keyToRename, newName) => {
         return element;
     })
     return returnArr;
+};
+
+const getName = (arr, keyTarget) => {
+    const newArr = arr.map(x => ({...x }));
+    const returnArr = newArr.map(element => {
+        return element;
+    })
+    return returnArr;
 }
 
-module.exports = { filterArrayObj, renameKey };
+module.exports = { filterArrayObj, renameKey, getName };

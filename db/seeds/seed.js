@@ -3,7 +3,7 @@ const {
     characterData,
     episodeData,
 } = require('../data/index.js');
-const { filterArrayObj, renameKey } = require('../utils/utils');
+const { filterArrayObj, renameKey, getName } = require('../utils/utils');
 
 
 exports.seed = function(knex) {

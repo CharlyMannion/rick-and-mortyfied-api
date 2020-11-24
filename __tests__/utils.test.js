@@ -1,4 +1,4 @@
-const { filterArrayObj, renameKey } = require('../db/utils/utils');
+const { filterArrayObj, renameKey, getName } = require('../db/utils/utils');
 
 describe('filterArrayObj', () => {
     it('returns an empty array when passed an empty array', () => {
@@ -218,6 +218,38 @@ describe('filterArrayObj', () => {
             const keyToRename = "owner";
             const newName = 'dog';
             const actual = renameKey(arr, keyToRename, newName);
+            const expected = [
+                { shop_name: 'shop-b', owner_id: 1, slogan: 'slogan-b' }
+            ];
+            expect(actual[0]).not.toBe(arr[0]);
+        });
+    });
+
+    describe('getName', () => {
+        it('returns an empty array when passed an empty array', () => {
+            const charactersArr = [];
+            const keyTarget = 'characters';
+            const actual = getName(charactersArr, keyTarget);
+            const expected = [];
+            expect(actual).toEqual(expected);
+        });
+        it('doesn\'t mutate the original array', () => {
+            const arr = [
+                { shop_name: 'shop-b', owner: 'firstname-b', slogan: 'slogan-b' }
+            ];
+            const keyTarget = "owner";
+            getName(arr, keyTarget);
+            const arrCopy = [
+                { shop_name: 'shop-b', owner: 'firstname-b', slogan: 'slogan-b' }
+            ];
+            expect(arr).toEqual(arrCopy);
+        });
+        it('returns a new array', () => {
+            const arr = [
+                { shop_name: 'shop-b', owner: 'firstname-b', slogan: 'slogan-b' }
+            ];
+            const keyTarget = "owner";
+            const actual = getName(arr, keyTarget);
             const expected = [
                 { shop_name: 'shop-b', owner_id: 1, slogan: 'slogan-b' }
             ];
