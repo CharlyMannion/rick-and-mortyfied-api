@@ -24,4 +24,13 @@ exports.seed = function(knex) {
                     console.log(insertedEpisodes);
                 })
         })
+        .then(() => {
+            const formattedLocationData = filterArrayObj(locationData, 'id', 'residents', 'created');
+            return knex('locations')
+                .insert(formattedLocationData)
+                .returning('*')
+                .then((insertedLocations) => {
+                    console.log(insertedLocations);
+                })
+        })
 };
