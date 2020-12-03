@@ -29,8 +29,8 @@ describe('app', () => {
                     return request(app)
                         .get('/api/episodes')
                         .expect(200)
-                        .then((res) => {
-                            expect(res.body.episodes).toEqual(expect.any(Array));
+                        .then(({ body: { episodes } }) => {
+                            expect(Array.isArray(episodes)).toBe(true);
                         });
                 })
             });

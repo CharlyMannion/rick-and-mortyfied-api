@@ -5,7 +5,7 @@ exports.fetchEpisodes = () => {
         .select('*')
         .from('episodes')
         .then((episodesArr) => {
-            console.log(episodesArr, "<=========== episodes ARRAY IN MODEL");
+            // console.log(episodesArr, "<=========== episodes ARRAY IN MODEL");
             return episodesArr;
         })
 }
