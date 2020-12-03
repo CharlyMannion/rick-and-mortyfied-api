@@ -33,7 +33,23 @@ describe('app', () => {
                             expect(Array.isArray(episodes)).toBe(true);
                             expect(episodes).toHaveLength(20);
                         });
-                })
+                });
+                it('status 200: responds with the correct keys', () => {
+                    return request(app)
+                        .get('/api/episodes')
+                        .expect(200)
+                        .then(({ body: { episodes } }) => {
+                            episodes.forEach((episode) => {
+                                expect(episode).toHaveProperty('air_date');
+                                expect(episode).toHaveProperty('created_at');
+                                expect(episode).toHaveProperty('episode');
+                                expect(episode).toHaveProperty('episode_id');
+                                expect(episode).toHaveProperty('name');
+                                expect(episode).toHaveProperty('number');
+                                expect(episode).toHaveProperty('url');
+                            });
+                        });
+                });
             });
         });
     });
