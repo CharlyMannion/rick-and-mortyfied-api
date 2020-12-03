@@ -9,3 +9,14 @@ exports.fetchEpisodes = () => {
             return episodesArr;
         })
 }
+
+exports.fetchEpisodeById = (sentEpisodeId) => {
+    return knex
+        .select('episodes.*')
+        .from('episodes')
+        .where('episodes.episode_id', sentEpisodeId)
+        .then((episode) => {
+            // console.log(episodesArr, "<=========== episodes ARRAY IN MODEL");
+            return episode;
+        })
+}
