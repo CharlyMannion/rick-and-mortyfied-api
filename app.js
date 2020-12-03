@@ -1,11 +1,11 @@
-// const app = require('express')();
-const express = require('express');
-const app = express();
+const app = require('express')();
 const apiRouter = require('./routes/api.router');
-const { handleInvalidPath } = require('./errors')
+const { handleInvalidPath, handle500s } = require('./errors')
 
 app.use('/api', apiRouter);
 
 app.all('/*', handleInvalidPath);
+
+app.use(handle500s)
 
 module.exports = app;
