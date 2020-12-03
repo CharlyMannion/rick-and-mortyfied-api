@@ -20,18 +20,12 @@ exports.seed = function(knex) {
             return knex('episodes')
                 .insert(formattedEpisodesData)
                 .returning('*')
-                .then((insertedEpisodes) => {
-                    console.log(insertedEpisodes);
-                })
         })
         .then(() => {
             const formattedLocationData = filterArrayObj(locationData, 'id', 'residents', 'created');
             return knex('locations')
                 .insert(formattedLocationData)
                 .returning('*')
-                .then((insertedLocations) => {
-                    console.log(insertedLocations);
-                })
         })
         .then(() => {
             const formattedCharacterData = filterArrayObj(characterData, 'id', 'episode', 'created');
@@ -40,8 +34,6 @@ exports.seed = function(knex) {
             return knex('characters')
                 .insert(getLocationName)
                 .returning('*')
-                .then((insertedCharacters) => {
-                    console.log(insertedCharacters);
-                })
+                .then(() => {})
         })
 };
