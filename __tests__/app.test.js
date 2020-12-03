@@ -25,14 +25,14 @@ describe('app', () => {
                 it('status 200: responds with status 200', () => {
                     return request(app).get('/api/episodes').expect(200);
                 });
-                // it('status 200: responds with an array', () => {
-                //     return request(app)
-                //         .get('/api/episodes')
-                //         .expect(200)
-                //         .then((res) => {
-                //             expect(res.body.topics).toEqual(expect.any(Array));
-                //         });
-                // })
+                it('status 200: responds with an array', () => {
+                    return request(app)
+                        .get('/api/episodes')
+                        .expect(200)
+                        .then((res) => {
+                            expect(res.body.episodes).toEqual(expect.any(Array));
+                        });
+                })
             });
         });
     });

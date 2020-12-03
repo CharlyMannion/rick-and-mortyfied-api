@@ -1,3 +1,8 @@
+const { fetchEpisodes } = require('../models/episodes.models');
+
 exports.getEpisodes = (req, res, next) => {
-    res.status(200).send('sending from controller');
+    fetchEpisodes()
+        .then((episodes) => {
+            res.status(200).send({ episodes })
+        });
 }
