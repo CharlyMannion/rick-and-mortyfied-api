@@ -19,4 +19,21 @@ describe('app', () => {
                 expect(msg).toBe('oopsie, path not found')
             });
     });
+    describe('/api', () => {
+        describe('/episodes', () => {
+            describe('GET', () => {
+                it('status 200: responds with status 200', () => {
+                    return request(app).get('/api/episodes').expect(200);
+                });
+                // it('status 200: responds with an array', () => {
+                //     return request(app)
+                //         .get('/api/episodes')
+                //         .expect(200)
+                //         .then((res) => {
+                //             expect(res.body.topics).toEqual(expect.any(Array));
+                //         });
+                // })
+            });
+        });
+    });
 })
