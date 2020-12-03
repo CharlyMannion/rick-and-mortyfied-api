@@ -31,6 +31,7 @@ describe('app', () => {
                         .expect(200)
                         .then(({ body: { episodes } }) => {
                             expect(Array.isArray(episodes)).toBe(true);
+                            expect(episodes).toHaveLength(20);
                         });
                 })
             });
