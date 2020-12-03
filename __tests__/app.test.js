@@ -25,6 +25,9 @@ describe('app', () => {
                 it('status 200: responds with status 200', () => {
                     return request(app).get('/api/episodes').expect(200);
                 });
+                it('status 200: responds with status 200 when an episode id is given', () => {
+                    return request(app).get('/api/episodes/1').expect(200);
+                });
                 it('status 200: responds with an array', () => {
                     return request(app)
                         .get('/api/episodes')
@@ -52,8 +55,8 @@ describe('app', () => {
                 });
             });
             describe('INVALID METHODS', () => {
-                it('status 405: for invalid methods POST, DELETE, PATCH and PUT', () => {
-                    const invalidMethods = ['post', 'delete', 'patch', 'put'];
+                it('status 405: for invalid methods DELETE, PATCH and PUT', () => {
+                    const invalidMethods = ['delete', 'patch', 'put'];
 
                     const promises = invalidMethods.map((method) => {
                         return request(app)[method]('/api/episodes')
