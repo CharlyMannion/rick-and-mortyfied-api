@@ -16,7 +16,10 @@ exports.fetchEpisodeById = (sentEpisodeId) => {
         .from('episodes')
         .where('episodes.episode_id', sentEpisodeId)
         .then((episode) => {
-            // console.log(episodesArr, "<=========== episodes ARRAY IN MODEL");
+            if (episode.length < 1) return Promise.reject({
+                status: 404,
+                msg: 'Sorry Pal, Episode Not Found'
+            });
             return episode;
         })
 }

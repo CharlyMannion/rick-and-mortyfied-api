@@ -67,6 +67,14 @@ describe("app", () => {
                             expect(response.body.episodes[0].url).toEqual("https://rickandmortyapi.com/api/episode/1");
                         });
                 });
+                it("status 404: NOT FOUND -> responds with an error message if the requested episode does not exist", () => {
+                    return request(app)
+                        .get("/api/episodes/999")
+                        .expect(404)
+                        .then((response) => {
+                            expect(response.body.msg).toBe('Sorry Pal, Episode Not Found')
+                        })
+                })
             });
             describe("INVALID METHODS", () => {
                 it("status 405: for invalid methods DELETE, PATCH and PUT", () => {

@@ -1,5 +1,4 @@
 exports.up = function(knex) {
-    console.log('creating locations table');
     return knex.schema.createTable('locations', (locationsTable) => {
         locationsTable.increments('location_id').primary();
         locationsTable.string('name').notNullable().unique();
@@ -11,6 +10,5 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-    console.log('dropping locations table');
     return knex.schema.dropTable('locations');
 };

@@ -1,5 +1,4 @@
 exports.up = function(knex) {
-    console.log('creating characters table');
     return knex.schema.createTable('characters', (charactersTable) => {
         charactersTable.increments('character_id').primary();
         charactersTable.string('name').notNullable();
@@ -16,6 +15,5 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-    console.log('dropping characters table');
     return knex.schema.dropTable('characters');
 };

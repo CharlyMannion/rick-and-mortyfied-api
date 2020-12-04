@@ -1,5 +1,4 @@
 exports.up = function(knex) {
-    console.log('creating episodes table');
     return knex.schema.createTable('episodes', (episodesTable) => {
         episodesTable.increments('episode_id').primary();
         episodesTable.integer('number').defaultTo(0);
@@ -12,6 +11,5 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-    console.log('dropping episodes table');
     return knex.schema.dropTable('episodes');
 };
