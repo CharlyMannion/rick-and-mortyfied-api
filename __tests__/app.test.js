@@ -59,13 +59,25 @@ describe("app", () => {
                             name: "Charly's Episode",
                             air_date: "December 4, 2020",
                             episode: "S05E01",
-                            characters: [
-                                "https://rickandmortyapi.com/api/character/1",
-                                "https://rickandmortyapi.com/api/character/2",
-                            ],
                             url: "https://rickandmortyapi.com/api/episode/100",
                         })
                         .expect(201);
+                });
+                it("status 201: responds with the successfully posted episode", () => {
+                    return request(app)
+                        .post("/api/episodes")
+                        .send({
+                            name: "Charly's Episode",
+                            air_date: "December 4, 2020",
+                            episode: "S05E01",
+                            url: "https://rickandmortyapi.com/api/episode/100",
+                        })
+                        .expect(201)
+                        .then(({ body }) => {
+                            expect(body.episode.name).toBe("Charly's Episode");
+                            expect(body.episode).toHaveProperty('episode_id');
+                            expect(body.episode).toHaveProperty('created_at');
+                        })
                 });
             });
             describe("INVALID METHODS", () => {

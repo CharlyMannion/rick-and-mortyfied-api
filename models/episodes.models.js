@@ -23,3 +23,9 @@ exports.fetchEpisodeById = (sentEpisodeId) => {
             return episode;
         })
 }
+
+exports.insertEpisode = (episodeBody) => {
+    return knex('episodes')
+        .insert(episodeBody)
+        .returning('*')
+}

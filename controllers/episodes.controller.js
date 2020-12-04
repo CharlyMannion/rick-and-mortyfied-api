@@ -1,4 +1,4 @@
-const { fetchEpisodes, fetchEpisodeById } = require('../models/episodes.models');
+const { fetchEpisodes, fetchEpisodeById, insertEpisode } = require('../models/episodes.models');
 
 exports.getEpisodes = (req, res, next) => {
     fetchEpisodes()
@@ -22,5 +22,13 @@ exports.getEpisodeById = (req, res, next) => {
 };
 
 exports.postEpisode = (req, res, next) => {
-    res.status(201).send('an episode will be posted');
+    const { name, air_date, episode, url } = req.body;
+    const newEpisode = { name: name, air_date: air_date, episode: episode, url: url };
+    insertEpisode(newEpisode)
+        .then(([episode]) => {
+            res.status(201).send({ episode });
+        })
+        .catch((err) => {
+            next(err);
+        })
 };
