@@ -50,6 +50,24 @@ describe("app", () => {
                             });
                         });
                 });
+            });
+            describe("INVALID METHODS", () => {
+                it("status 405: for invalid methods POST, DELETE, PATCH and PUT", () => {
+                    const invalidMethods = ["post", "delete", "patch", "put"];
+
+                    const promises = invalidMethods.map((method) => {
+                        return request(app)[method]("/api/episodes")
+                            .expect(405)
+                            .then(({ body: { msg } }) => {
+                                expect(msg).toBe("Nah Pal, Method Not Allowed!");
+                            });
+                    });
+                    return Promise.all(promises);
+                });
+            });
+        });
+        describe("/episodes/:episode_id", () => {
+            describe("GET", () => {
                 it("status 200: responds with status 200 when an episode id is given", () => {
                     return request(app).get("/api/episodes/1").expect(200);
                 });
@@ -83,12 +101,17 @@ describe("app", () => {
                         })
                 });
             });
+            describe("POST", () => {
+                it("status 201: ", () => {
+
+                })
+            })
             describe("INVALID METHODS", () => {
                 it("status 405: for invalid methods DELETE, PATCH and PUT", () => {
                     const invalidMethods = ["delete", "patch", "put"];
 
                     const promises = invalidMethods.map((method) => {
-                        return request(app)[method]("/api/episodes")
+                        return request(app)[method]("/api/episodes/1")
                             .expect(405)
                             .then(({ body: { msg } }) => {
                                 expect(msg).toBe("Nah Pal, Method Not Allowed!");
