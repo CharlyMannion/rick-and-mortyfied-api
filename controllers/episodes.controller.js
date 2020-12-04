@@ -19,4 +19,8 @@ exports.getEpisodeById = (req, res, next) => {
         .catch((err) => {
             next(err);
         })
-}
+};
+
+exports.postEpisode = (req, res, next) => {
+    res.status(201).send('an episode will be posted');
+};

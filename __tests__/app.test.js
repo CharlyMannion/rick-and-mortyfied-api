@@ -51,9 +51,26 @@ describe("app", () => {
                         });
                 });
             });
+            describe("POST", () => {
+                it("status 201: responds with 201 for a successfully posted episode", () => {
+                    return request(app)
+                        .post("/api/episodes")
+                        .send({
+                            name: "Charly's Episode",
+                            air_date: "December 4, 2020",
+                            episode: "S05E01",
+                            characters: [
+                                "https://rickandmortyapi.com/api/character/1",
+                                "https://rickandmortyapi.com/api/character/2",
+                            ],
+                            url: "https://rickandmortyapi.com/api/episode/100",
+                        })
+                        .expect(201);
+                });
+            });
             describe("INVALID METHODS", () => {
-                it("status 405: for invalid methods POST, DELETE, PATCH and PUT", () => {
-                    const invalidMethods = ["post", "delete", "patch", "put"];
+                it("status 405: for invalid methods DELETE, PATCH and PUT", () => {
+                    const invalidMethods = ["delete", "patch", "put"];
 
                     const promises = invalidMethods.map((method) => {
                         return request(app)[method]("/api/episodes")
@@ -76,12 +93,16 @@ describe("app", () => {
                         .get("/api/episodes/1")
                         .expect(200)
                         .then((response) => {
-                            expect(response.body.episodes[0].air_date).toEqual("December 2, 2013");
+                            expect(response.body.episodes[0].air_date).toEqual(
+                                "December 2, 2013"
+                            );
                             expect(response.body.episodes[0].episode).toEqual("S01E01");
                             expect(response.body.episodes[0].episode_id).toEqual(1);
                             expect(response.body.episodes[0].name).toEqual("Pilot");
                             expect(response.body.episodes[0].number).toEqual(1);
-                            expect(response.body.episodes[0].url).toEqual("https://rickandmortyapi.com/api/episode/1");
+                            expect(response.body.episodes[0].url).toEqual(
+                                "https://rickandmortyapi.com/api/episode/1"
+                            );
                         });
                 });
                 it("status 404: NOT FOUND -> responds with an error message if the requested episode does not exist", () => {
@@ -89,26 +110,21 @@ describe("app", () => {
                         .get("/api/episodes/999")
                         .expect(404)
                         .then((response) => {
-                            expect(response.body.msg).toBe('Sorry Pal, Episode Not Found!')
-                        })
+                            expect(response.body.msg).toBe("Sorry Pal, Episode Not Found!");
+                        });
                 });
                 it("status 400: BAD REQUEST -> responds with an error message if the episode_id is invalid", () => {
                     return request(app)
                         .get("/api/episodes/notAnId")
                         .expect(400)
                         .then((response) => {
-                            expect(response.body.msg).toBe('No Can Do Pal, Bad Request!')
-                        })
+                            expect(response.body.msg).toBe("No Can Do Pal, Bad Request!");
+                        });
                 });
             });
-            describe("POST", () => {
-                it("status 201: ", () => {
-
-                })
-            })
             describe("INVALID METHODS", () => {
-                it("status 405: for invalid methods DELETE, PATCH and PUT", () => {
-                    const invalidMethods = ["delete", "patch", "put"];
+                it("status 405: for invalid methods POST, DELETE, PATCH and PUT", () => {
+                    const invalidMethods = ["post", "delete", "patch", "put"];
 
                     const promises = invalidMethods.map((method) => {
                         return request(app)[method]("/api/episodes/1")
