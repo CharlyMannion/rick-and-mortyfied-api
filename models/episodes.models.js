@@ -18,7 +18,7 @@ exports.fetchEpisodeById = (sentEpisodeId) => {
         .then((episode) => {
             if (episode.length < 1) return Promise.reject({
                 status: 404,
-                msg: 'Sorry Pal, Episode Not Found'
+                msg: 'Sorry Pal, Episode Not Found!'
             });
             return episode;
         })

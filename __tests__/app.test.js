@@ -1,4 +1,3 @@
-const { expect } = require("@jest/globals");
 const request = require("supertest");
 const app = require("../app");
 const connection = require("../db/connection");
@@ -17,7 +16,7 @@ describe("app", () => {
             .get("/invalid-path")
             .expect(404)
             .then(({ body: { msg } }) => {
-                expect(msg).toBe("oopsie, path not found");
+                expect(msg).toBe("Oopsie, Path Not Found!");
             });
     });
     describe("/api", () => {
@@ -72,9 +71,17 @@ describe("app", () => {
                         .get("/api/episodes/999")
                         .expect(404)
                         .then((response) => {
-                            expect(response.body.msg).toBe('Sorry Pal, Episode Not Found')
+                            expect(response.body.msg).toBe('Sorry Pal, Episode Not Found!')
                         })
-                })
+                });
+                it("status 400: BAD REQUEST -> responds with an error message if the episode_id is invalid", () => {
+                    return request(app)
+                        .get("/api/episodes/notAnId")
+                        .expect(400)
+                        .then((response) => {
+                            expect(response.body.msg).toBe('No Can Do Pal, Bad Request!')
+                        })
+                });
             });
             describe("INVALID METHODS", () => {
                 it("status 405: for invalid methods DELETE, PATCH and PUT", () => {
@@ -84,7 +91,7 @@ describe("app", () => {
                         return request(app)[method]("/api/episodes")
                             .expect(405)
                             .then(({ body: { msg } }) => {
-                                expect(msg).toBe("nah pal, method not allowed");
+                                expect(msg).toBe("Nah Pal, Method Not Allowed!");
                             });
                     });
                     return Promise.all(promises);
