@@ -237,13 +237,46 @@ GET /api/characters/?gender=female
 GET /api/episodes
 ```
 
+#### Responds with
+
+- an array of episodes objects, each of which should have the following properties:
+  - episode_id 
+  - name
+  - air_date 
+  - episode 
+  - url
+  - created_at
+
+  #### Should accept queries
+* ```name```, which filters the episode by the name specifed in the query
+
 ```
 GET /api/episodes/:episode_id
 ```
 
+#### Responds with
+
+- an episodes object, which should have the following properties:
+  - episode_id 
+  - name
+  - air_date 
+  - episode 
+  - url
+  - created_at
+
 ```
 POST /api/episodes/:episode_id
 ```
+
+#### Request body accepts
+- an object with the following properties:
+  - name
+  - air_date 
+  - episode 
+  - url
+
+#### Responds with
+- The posted episode
 
 ```
 GET /api/episodes/?name=close+rick+encounters+of+the+rick+kind
