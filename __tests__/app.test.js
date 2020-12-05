@@ -85,7 +85,21 @@ describe("app", () => {
                         .send({})
                         .expect(400)
                         .then(({ body: { msg } }) => {
-                            expect(msg).toBe("No Can Do Pal, Bad Request. Gimme Some Body!");
+                            expect(msg).toBe("No Can Do Pal, Bad Request. Fix Ya Body!");
+                        });
+                });
+                it("status 400: BAD REQUEST -> responds with an error message if request fails schema validation", () => {
+                    return request(app)
+                        .post("/api/episodes")
+                        .send({
+                            name: null,
+                            air_date: "",
+                            episode: "",
+                            url: null,
+                        })
+                        .expect(400)
+                        .then(({ body: { msg } }) => {
+                            expect(msg).toBe("No Can Do Pal, Bad Request. Fix Ya Body!");
                         });
                 });
             });
