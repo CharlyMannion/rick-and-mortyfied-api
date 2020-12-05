@@ -249,6 +249,10 @@ GET /api/episodes
 
   #### Should accept queries
 * ```name```, which filters the episode by the name specifed in the query
+e.g. 
+```
+GET /api/episodes/?name=close+rick+encounters+of+the+rick+kind
+```
 
 ```
 GET /api/episodes/:episode_id
@@ -278,6 +282,4 @@ POST /api/episodes/:episode_id
 #### Responds with
 - The posted episode
 
-```
-GET /api/episodes/?name=close+rick+encounters+of+the+rick+kind
-```
+
