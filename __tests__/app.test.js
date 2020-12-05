@@ -79,6 +79,15 @@ describe("app", () => {
                             expect(body.episode).toHaveProperty('created_at');
                         })
                 });
+                it("status 400: BAD REQUEST -> malformed body/ missing fields responds with an error message", () => {
+                    return request(app)
+                        .post("/api/episodes")
+                        .send({})
+                        .expect(400)
+                        .then(({ body: { msg } }) => {
+                            expect(msg).toBe("No Can Do Pal, Bad Request. Gimme Some Body!");
+                        });
+                });
             });
             describe("INVALID METHODS", () => {
                 it("status 405: for invalid methods DELETE, PATCH and PUT", () => {
