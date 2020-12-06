@@ -84,6 +84,14 @@ describe("app", () => {
                             expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Episode Not Found!");
                         });
                 });
+                it("status 404: NOT FOUND responds with an error when number of episode in query does not exist", () => {
+                    return request(app)
+                        .get("/api/episodes/?number=999")
+                        .expect(404)
+                        .then((response) => {
+                            expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Episode Not Found!");
+                        });
+                });
             });
             describe("POST", () => {
                 it("status 201: responds with 201 for a successfully posted episode", () => {
