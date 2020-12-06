@@ -1,31 +1,31 @@
-const knex = require("../db/connection")
+const connection = require("../db/connection");
 
-exports.fetchEpisodes = () => {
-    return knex
-        .select('*')
+exports.fetchEpisodes = (sentName) => {
+    return connection
+        .select("episodes.*")
         .from('episodes')
-        .then((episodesArr) => {
-            // console.log(episodesArr, "<=========== episodes ARRAY IN MODEL");
-            return episodesArr;
-        })
-}
+        .modify(function(knex) {
+            if (sentName) {
+                knex.where("episodes.name", sentName);
+            }
+        });
+};
 
 exports.fetchEpisodeById = (sentEpisodeId) => {
-    return knex
-        .select('episodes.*')
-        .from('episodes')
-        .where('episodes.episode_id', sentEpisodeId)
+    return connection
+        .select("episodes.*")
+        .from("episodes")
+        .where("episodes.episode_id", sentEpisodeId)
         .then((episode) => {
-            if (episode.length < 1) return Promise.reject({
-                status: 404,
-                msg: 'Sorry Pal, Episode Not Found!'
-            });
+            if (episode.length < 1)
+                return Promise.reject({
+                    status: 404,
+                    msg: "Sorry Pal, Episode Not Found!",
+                });
             return episode;
-        })
-}
+        });
+};
 
 exports.insertEpisode = (episodeBody) => {
-    return knex('episodes')
-        .insert(episodeBody)
-        .returning('*')
-}
+    return connection("episodes").insert(episodeBody).returning("*");
+};

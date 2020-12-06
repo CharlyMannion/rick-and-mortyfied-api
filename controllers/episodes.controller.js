@@ -1,7 +1,9 @@
 const { fetchEpisodes, fetchEpisodeById, insertEpisode } = require('../models/episodes.models');
 
 exports.getEpisodes = (req, res, next) => {
-    fetchEpisodes()
+    const { query: { name } } = req;
+    console.log(name, "NAME IN CONTROLLER");
+    fetchEpisodes(name)
         .then((episodes) => {
             res.status(200).send({ episodes })
         })

@@ -50,6 +50,18 @@ describe("app", () => {
                             });
                         });
                 });
+                it("status 200: responds with an array of episodes matching the name specified in the request query", () => {
+                    return request(app)
+                        .get("/api/episodes//?name=Pilot")
+                        .expect(200)
+                        .then(({ body: { episodes } }) => {
+                            expect(Array.isArray(episodes)).toBe(true);
+                            // console.log(episodes, "EPISODES IN TEST")
+                            episodes.forEach((episode) => {
+                                expect(episode.name).toBe('Pilot');
+                            });
+                        });
+                });
             });
             describe("POST", () => {
                 it("status 201: responds with 201 for a successfully posted episode", () => {
