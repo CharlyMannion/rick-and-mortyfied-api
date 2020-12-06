@@ -1,12 +1,15 @@
 const connection = require("../db/connection");
 
-exports.fetchEpisodes = (sentName) => {
+exports.fetchEpisodes = (sentName, sentNumber) => {
     return connection
         .select("episodes.*")
         .from('episodes')
         .modify(function(knex) {
             if (sentName) {
                 knex.where("episodes.name", sentName);
+            }
+            if (sentNumber) {
+                knex.where("episodes.number", sentNumber);
             }
         });
 };

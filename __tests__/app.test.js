@@ -52,12 +52,27 @@ describe("app", () => {
                 });
                 it("status 200: responds with an array of episodes matching the name specified in the request query", () => {
                     return request(app)
-                        .get("/api/episodes//?name=Pilot")
+                        .get("/api/episodes/?name=Pilot")
                         .expect(200)
                         .then(({ body: { episodes } }) => {
                             expect(Array.isArray(episodes)).toBe(true);
+                            expect(episodes.length).toBe(1);
                             // console.log(episodes, "EPISODES IN TEST")
                             episodes.forEach((episode) => {
+                                expect(episode.name).toBe('Pilot');
+                            });
+                        });
+                });
+                it("status 200: responds with an array of episodes matching the name specified in the request query", () => {
+                    return request(app)
+                        .get("/api/episodes/?number=1")
+                        .expect(200)
+                        .then(({ body: { episodes } }) => {
+                            expect(Array.isArray(episodes)).toBe(true);
+                            expect(episodes.length).toBe(1);
+                            console.log(episodes, "EPISODES IN TEST")
+                            episodes.forEach((episode) => {
+                                expect(episode.number).toBe(1);
                                 expect(episode.name).toBe('Pilot');
                             });
                         });
