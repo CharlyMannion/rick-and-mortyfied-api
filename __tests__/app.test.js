@@ -57,7 +57,6 @@ describe("app", () => {
                         .then(({ body: { episodes } }) => {
                             expect(Array.isArray(episodes)).toBe(true);
                             expect(episodes.length).toBe(1);
-                            // console.log(episodes, "EPISODES IN TEST")
                             episodes.forEach((episode) => {
                                 expect(episode.name).toBe('Pilot');
                             });
@@ -75,6 +74,14 @@ describe("app", () => {
                                 expect(episode.number).toBe(1);
                                 expect(episode.name).toBe('Pilot');
                             });
+                        });
+                });
+                it("status 404: NOT FOUND responds with an error when name of episode in query does not exist", () => {
+                    return request(app)
+                        .get("/api/episodes/?name=wrong")
+                        .expect(404)
+                        .then((response) => {
+                            expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Episode Not Found!");
                         });
                 });
             });

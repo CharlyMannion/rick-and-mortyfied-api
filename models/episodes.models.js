@@ -11,6 +11,14 @@ exports.fetchEpisodes = (sentName, sentNumber) => {
             if (sentNumber) {
                 knex.where("episodes.number", sentNumber);
             }
+        })
+        .then((episode) => {
+            if (episode.length < 1)
+                return Promise.reject({
+                    status: 404,
+                    msg: "Sorry Pal, That Query Was Funky. Episode Not Found!",
+                });
+            return episode;
         });
 };
 
