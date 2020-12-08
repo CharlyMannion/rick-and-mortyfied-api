@@ -76,15 +76,6 @@ describe("app", () => {
                             });
                         });
                 });
-                // it("status 200: no episode is sent back if the queried thing does not exist, but the query is potentially valid", () => {
-                //     return request(app)
-                //         .get("/api/episodes/?age=999")
-                //         .expect(200)
-                //         .then(({ body: { episodes } }) => {
-                //             console.log(episodes, "<--------- RESPONSE")
-                //             expect(episodes.length).toBe(0);
-                //         });
-                // });
                 it("status 404: NOT FOUND responds with an error when name of episode in query does not exist", () => {
                     return request(app)
                         .get("/api/episodes/?name=wrong")
@@ -113,6 +104,20 @@ describe("app", () => {
                     return request(app)
                         .get("/api/episodes/?nombre=999")
                         .expect(404)
+                        .then((response) => {
+                            expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Episode Not Found!");
+                        });
+                });
+                it("status 404: NOT FOUND no episode is sent back if the queried number does not exist, but the query is potentially valid", () => {
+                    return request(app)
+                        .get("/api/episodes/?number=9999")
+                        .then((response) => {
+                            expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Episode Not Found!");
+                        });
+                });
+                it("status 404: NOT FOUND no episode is sent back if the queried name does not exist, but the query is potentially valid", () => {
+                    return request(app)
+                        .get("/api/episodes/?name=Charly")
                         .then((response) => {
                             expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Episode Not Found!");
                         });
