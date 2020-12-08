@@ -1,4 +1,3 @@
-const { expect } = require('@jest/globals');
 const { filterArrayObj, renameKey, getName } = require('../db/utils/utils');
 
 describe('filterArrayObj', () => {

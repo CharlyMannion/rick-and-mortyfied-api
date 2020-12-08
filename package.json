@@ -10,7 +10,9 @@
         "migrate-latest": "knex migrate:latest",
         "seed": "knex seed:run",
         "test-app": "jest __tests__/app.test.js",
-        "test-utils": "jest __tests__/utils.test.js"
+        "test-utils": "jest __tests__/utils.test.js",
+        "test-model-utils": "jest __tests__/modelUtils.test.js"
+
     },
     "repository": {
         "type": "git",
