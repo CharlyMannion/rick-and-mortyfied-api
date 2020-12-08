@@ -62,20 +62,29 @@ describe("app", () => {
                             });
                         });
                 });
-                it("status 200: responds with an array of episodes matching the name specified in the request query", () => {
+                it("status 200: responds with an array of episodes matching the number specified in the request query", () => {
                     return request(app)
                         .get("/api/episodes/?number=1")
                         .expect(200)
                         .then(({ body: { episodes } }) => {
                             expect(Array.isArray(episodes)).toBe(true);
                             expect(episodes.length).toBe(1);
-                            console.log(episodes, "EPISODES IN TEST")
+                            // console.log(episodes, "EPISODES IN TEST")
                             episodes.forEach((episode) => {
                                 expect(episode.number).toBe(1);
                                 expect(episode.name).toBe('Pilot');
                             });
                         });
                 });
+                // it("status 200: no episode is sent back if the queried thing does not exist, but the query is potentially valid", () => {
+                //     return request(app)
+                //         .get("/api/episodes/?age=999")
+                //         .expect(200)
+                //         .then(({ body: { episodes } }) => {
+                //             console.log(episodes, "<--------- RESPONSE")
+                //             expect(episodes.length).toBe(0);
+                //         });
+                // });
                 it("status 404: NOT FOUND responds with an error when name of episode in query does not exist", () => {
                     return request(app)
                         .get("/api/episodes/?name=wrong")
@@ -87,6 +96,22 @@ describe("app", () => {
                 it("status 404: NOT FOUND responds with an error when number of episode in query does not exist", () => {
                     return request(app)
                         .get("/api/episodes/?number=999")
+                        .expect(404)
+                        .then((response) => {
+                            expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Episode Not Found!");
+                        });
+                });
+                it("status 404: NOT FOUND responds with an error when number of episode in query does not exist", () => {
+                    return request(app)
+                        .get("/api/episodes/?number=999")
+                        .expect(404)
+                        .then((response) => {
+                            expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Episode Not Found!");
+                        });
+                });
+                it("status 400: BAD REQUEST responds with an error if query is invalid", () => {
+                    return request(app)
+                        .get("/api/episodes/?nombre=999")
                         .expect(404)
                         .then((response) => {
                             expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Episode Not Found!");
