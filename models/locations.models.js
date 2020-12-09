@@ -29,3 +29,18 @@ exports.fetchLocations = (queryKey, sentName, sentType, sentDimension) => {
 exports.insertLocation = (locationBody) => {
     return connection("locations").insert(locationBody).returning("*");
 };
+
+exports.fetchLocationById = (sentLocationId) => {
+    return connection
+        .select("locations.*")
+        .from("locations")
+        .where("locations.location_id", sentLocationId)
+        .then((location) => {
+            if (location.length < 1)
+                return Promise.reject({
+                    status: 404,
+                    msg: "Sorry Pal, Location Not Found!",
+                });
+            return location;
+        });
+};

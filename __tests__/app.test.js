@@ -424,5 +424,56 @@ describe("app", () => {
                 });
             });
         })
+        describe("/locations/:location_id", () => {
+            describe("GET", () => {
+                it("status 200: responds with status 200 when an location id is given", () => {
+                    return request(app).get("/api/locations/1").expect(200);
+                });
+                it("status 200: responds with an array containing an location when an location id is given", () => {
+                    return request(app)
+                        .get("/api/locations/2")
+                        .expect(200)
+                        .then((response) => {
+                            expect(response.body.locations[0].location_id).toEqual(2);
+                            expect(response.body.locations[0].name).toEqual("Abadango");
+                            expect(response.body.locations[0].type).toEqual('Cluster');
+                            expect(response.body.locations[0].dimension).toEqual('unknown');
+                            expect(response.body.locations[0].url).toEqual(
+                                'https://rickandmortyapi.com/api/location/2'
+                            );
+                        });
+                });
+                it("status 404: NOT FOUND -> responds with an error message if the requested location does not exist", () => {
+                    return request(app)
+                        .get("/api/locations/999")
+                        .expect(404)
+                        .then((response) => {
+                            expect(response.body.msg).toBe("Sorry Pal, Location Not Found!");
+                        });
+                });
+                it("status 400: BAD REQUEST -> responds with an error message if the location_id is invalid", () => {
+                    return request(app)
+                        .get("/api/locations/notAnId")
+                        .expect(400)
+                        .then((response) => {
+                            expect(response.body.msg).toBe("No Can Do Pal, Bad Request!");
+                        });
+                });
+            });
+            describe("INVALID METHODS", () => {
+                it("status 405: for invalid methods POST, DELETE, PATCH and PUT", () => {
+                    const invalidMethods = ["post", "delete", "patch", "put"];
+
+                    const promises = invalidMethods.map((method) => {
+                        return request(app)[method]("/api/locations/1")
+                            .expect(405)
+                            .then(({ body: { msg } }) => {
+                                expect(msg).toBe("Nah Pal, Method Not Allowed!");
+                            });
+                    });
+                    return Promise.all(promises);
+                });
+            });
+        });
     });
 });
