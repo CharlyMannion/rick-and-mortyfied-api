@@ -385,29 +385,29 @@ describe("app", () => {
 
                         })
                 });
-                // it("status 400: BAD REQUEST -> malformed body/ missing fields responds with an error message", () => {
-                //     return request(app)
-                //         .post("/api/locations")
-                //         .send({})
-                //         .expect(400)
-                //         .then(({ body: { msg } }) => {
-                //             expect(msg).toBe("No Can Do Pal, Bad Request. Fix Ya Body!");
-                //         });
-                // });
-                // it("status 400: BAD REQUEST -> responds with an error message if request fails schema validation", () => {
-                //     return request(app)
-                //         .post("/api/locations")
-                //         .send({
-                //             name: null,
-                //             type: "",
-                //             dimension: "",
-                //             url: null,
-                //         })
-                //         .expect(400)
-                //         .then(({ body: { msg } }) => {
-                //             expect(msg).toBe("No Can Do Pal, Bad Request. Fix Ya Body!");
-                //         });
-                // });
+                it("status 400: BAD REQUEST -> malformed body/ missing fields responds with an error message", () => {
+                    return request(app)
+                        .post("/api/locations")
+                        .send({})
+                        .expect(400)
+                        .then(({ body: { msg } }) => {
+                            expect(msg).toBe("No Can Do Pal, Bad Request. Fix Ya Body!");
+                        });
+                });
+                it("status 400: BAD REQUEST -> responds with an error message if request fails schema validation", () => {
+                    return request(app)
+                        .post("/api/locations")
+                        .send({
+                            name: null,
+                            type: "",
+                            dimension: "",
+                            url: null,
+                        })
+                        .expect(400)
+                        .then(({ body: { msg } }) => {
+                            expect(msg).toBe("No Can Do Pal, Bad Request. Fix Ya Body!");
+                        });
+                });
             });
             describe("INVALID METHODS", () => {
                 it("status 405: for invalid methods DELETE, PATCH and PUT", () => {
