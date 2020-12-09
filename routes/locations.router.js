@@ -3,6 +3,5 @@ const { getLocations, postLocation } = require('../controllers/locations.control
 const { handle405s } = require('../errors');
 
 locationsRouter.route('/').get(getLocations).post(postLocation).all(handle405s);;
-// locationsRouter.route('/').get(getLocations).post(postLocation).all(handle405s);
 
 module.exports = locationsRouter;
