@@ -1,3 +1,9 @@
+const { fetchLocations } = require('../models/locations.models');
+
 exports.getLocations = (req, res, next) => {
-    res.status(200).send('sending location from controller')
+    fetchLocations()
+        .then((locations => {
+            res.status(200).send({ locations })
+
+        }))
 }

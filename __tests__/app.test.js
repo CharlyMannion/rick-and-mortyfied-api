@@ -249,6 +249,15 @@ describe("app", () => {
                 it("status 200: responds with status 200", () => {
                     return request(app).get("/api/locations").expect(200);
                 });
+                it("status 200: responds with an array", () => {
+                    return request(app)
+                        .get("/api/locations")
+                        .expect(200)
+                        .then(({ body: { locations } }) => {
+                            expect(Array.isArray(locations)).toBe(true);
+                            expect(locations).toHaveLength(20);
+                        });
+                });
             })
         })
     });
