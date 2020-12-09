@@ -252,6 +252,7 @@ GET /api/episodes
 e.g. 
 ```
 GET /api/episodes/?name=close+rick+encounters+of+the+rick+kind
+GET /api/episodes/?number=1
 ```
 
 ```
