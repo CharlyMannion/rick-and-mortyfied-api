@@ -147,6 +147,7 @@ POST /api/locations/:location_id
   - name
   - type
   - dimension
+  - url
 
 #### Responds with
 

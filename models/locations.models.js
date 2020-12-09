@@ -24,4 +24,8 @@ exports.fetchLocations = (queryKey, sentName, sentType, sentDimension) => {
             });
             return locations;
         });
-}
+};
+
+exports.insertLocation = (locationBody) => {
+    return connection("locations").insert(locationBody).returning("*");
+};

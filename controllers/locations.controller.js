@@ -1,4 +1,4 @@
-const { fetchLocations } = require('../models/locations.models');
+const { fetchLocations, insertLocation } = require('../models/locations.models');
 
 exports.getLocations = (req, res, next) => {
     const { query: { name, type, dimension } } = req;
@@ -11,4 +11,16 @@ exports.getLocations = (req, res, next) => {
         .catch((err) => {
             next(err);
         })
-}
+};
+
+exports.postLocation = (req, res, next) => {
+    const { name, type, dimension, url } = req.body;
+    const newLocation = { name: name, type: type, dimension: dimension, url: url };
+    insertLocation(newLocation)
+        .then(([location]) => {
+            res.status(201).send({ location });
+        })
+        .catch((err) => {
+            next(err);
+        })
+};
