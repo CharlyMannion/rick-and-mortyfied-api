@@ -324,6 +324,35 @@ describe("app", () => {
                             expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Location Not Found!");
                         });
                 });
+                it("status 400: BAD REQUEST responds with an error if query is invalid", () => {
+                    return request(app)
+                        .get("/api/locations/?nombre=999")
+                        .expect(404)
+                        .then((response) => {
+                            expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Location Not Found!");
+                        });
+                });
+                it("status 404: NOT FOUND no location is sent back if the queried type does not exist, but the query is potentially valid", () => {
+                    return request(app)
+                        .get("/api/locations/?type=Charly")
+                        .then((response) => {
+                            expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Location Not Found!");
+                        });
+                });
+                it("status 404: NOT FOUND no location is sent back if the queried name does not exist, but the query is potentially valid", () => {
+                    return request(app)
+                        .get("/api/locations/?name=Charly")
+                        .then((response) => {
+                            expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Location Not Found!");
+                        });
+                });
+                it("status 404: NOT FOUND no location is sent back if the queried dimension does not exist, but the query is potentially valid", () => {
+                    return request(app)
+                        .get("/api/locations/?dimension=Charly")
+                        .then((response) => {
+                            expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Location Not Found!");
+                        });
+                });
             });
             describe("INVALID METHODS", () => {
                 it("status 405: for invalid methods DELETE, PATCH and PUT", () => {

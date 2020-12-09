@@ -1,6 +1,8 @@
 const connection = require("../db/connection");
+const { checkValid } = require('../db/utils/modelUtils');
 
-exports.fetchLocations = (sentName, sentType, sentDimension) => {
+exports.fetchLocations = (queryKey, sentName, sentType, sentDimension) => {
+    const validKeys = ['name', 'type', 'dimension'];
     return connection
         .select("locations.*")
         .from("locations")
@@ -16,8 +18,7 @@ exports.fetchLocations = (sentName, sentType, sentDimension) => {
             }
         })
         .then((locations) => {
-            // if (locations.length === 0 || checkValid(validKeys, queryKey) === false) return Promise.reject({
-            if (locations.length === 0) return Promise.reject({
+            if (locations.length === 0 || checkValid(validKeys, queryKey) === false) return Promise.reject({
                 status: 404,
                 msg: "Sorry Pal, That Query Was Funky. Location Not Found!",
             });
