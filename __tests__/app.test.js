@@ -297,15 +297,23 @@ describe("app", () => {
                             });
                         });
                 });
-                it("status 200: responds with an array of locations matching the name specified in the request query", () => {
+                it("status 200: responds with an array of locations matching the dimension specified in the request query", () => {
                     return request(app)
-                        .get("/api/locations/?dimension=C-137")
+                        .get("/api/locations/?dimension=unknown")
                         .expect(200)
                         .then(({ body: { locations } }) => {
                             expect(Array.isArray(locations)).toBe(true);
                             locations.forEach((location) => {
-                                expect(location.dimension).toBe('C-137');
+                                expect(location.dimension).toBe('unknown');
                             });
+                        });
+                });
+                it("status 404: NOT FOUND responds with an error when name of episode in query does not exist", () => {
+                    return request(app)
+                        .get("/api/locations/?name=wrong")
+                        .expect(404)
+                        .then((response) => {
+                            expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Location Not Found!");
                         });
                 });
             });

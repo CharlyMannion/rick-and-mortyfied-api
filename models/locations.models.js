@@ -15,4 +15,12 @@ exports.fetchLocations = (sentName, sentType, sentDimension) => {
                 knex.where("locations.dimension", sentDimension);
             }
         })
+        .then((locations) => {
+            // if (locations.length === 0 || checkValid(validKeys, queryKey) === false) return Promise.reject({
+            if (locations.length === 0) return Promise.reject({
+                status: 404,
+                msg: "Sorry Pal, That Query Was Funky. Location Not Found!",
+            });
+            return locations;
+        });
 }
