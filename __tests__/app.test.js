@@ -366,25 +366,25 @@ describe("app", () => {
                         })
                         .expect(201);
                 });
-                // it("status 201: responds with the successfully posted episode", () => {
-                //     return request(app)
-                //         .post("/api/locations")
-                // .send({
-                //     name: "Charly's Location",
-                //     type: "Planet",
-                //     dimension: "unknown",
-                //     url: "https://rickandmortyapi.com/api/location/100",
-                // })
-                //         .expect(201)
-                //         .then(({ body }) => {
-                //             expect(body.location.name).toBe("Charly's Location");
-                //             expect(body.location).toHaveProperty('location_id');
-                //             expect(body.location).toHaveProperty('created_at');
-                //             expect(body.location).toHaveProperty('type');
-                //             expect(body.location).toHaveProperty('dimension');
+                it("status 201: responds with the successfully posted episode", () => {
+                    return request(app)
+                        .post("/api/locations")
+                        .send({
+                            name: "Charly's Location",
+                            type: "Planet",
+                            dimension: "unknown",
+                            url: "https://rickandmortyapi.com/api/location/100",
+                        })
+                        .expect(201)
+                        .then(({ body }) => {
+                            expect(body.location.name).toBe("Charly's Location");
+                            expect(body.location).toHaveProperty('location_id');
+                            expect(body.location).toHaveProperty('created_at');
+                            expect(body.location).toHaveProperty('type');
+                            expect(body.location).toHaveProperty('dimension');
 
-                //         })
-                // });
+                        })
+                });
                 // it("status 400: BAD REQUEST -> malformed body/ missing fields responds with an error message", () => {
                 //     return request(app)
                 //         .post("/api/locations")
