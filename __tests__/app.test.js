@@ -244,5 +244,12 @@ describe("app", () => {
                 });
             });
         });
+        describe("/locations", () => {
+            describe("GET", () => {
+                it("status 200: responds with status 200", () => {
+                    return request(app).get("/api/locations").expect(200);
+                });
+            })
+        })
     });
 });
