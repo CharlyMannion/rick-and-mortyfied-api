@@ -263,7 +263,7 @@ describe("app", () => {
                         .get("/api/locations")
                         .expect(200)
                         .then(({ body: { locations } }) => {
-                            // console.log(locations, "LOCATIONS IN TESTS")
+                            console.log(locations, "LOCATIONS IN TESTS")
                             locations.forEach((location) => {
                                 expect(location).toHaveProperty("location_id");
                                 expect(location).toHaveProperty("name");
@@ -271,6 +271,40 @@ describe("app", () => {
                                 expect(location).toHaveProperty("dimension");
                                 expect(location).toHaveProperty("url");
                                 expect(location).toHaveProperty("created_at");
+                            });
+                        });
+                });
+                it("status 200: responds with an array of locations matching the name specified in the request query", () => {
+                    return request(app)
+                        .get("/api/locations/?name=Abadango")
+                        .expect(200)
+                        .then(({ body: { locations } }) => {
+                            expect(Array.isArray(locations)).toBe(true);
+                            expect(locations.length).toBe(1);
+                            locations.forEach((location) => {
+                                expect(location.name).toBe('Abadango');
+                            });
+                        });
+                });
+                it("status 200: responds with an array of locations matching the name specified in the request query", () => {
+                    return request(app)
+                        .get("/api/locations/?type=Planet")
+                        .expect(200)
+                        .then(({ body: { locations } }) => {
+                            expect(Array.isArray(locations)).toBe(true);
+                            locations.forEach((location) => {
+                                expect(location.type).toBe('Planet');
+                            });
+                        });
+                });
+                it("status 200: responds with an array of locations matching the name specified in the request query", () => {
+                    return request(app)
+                        .get("/api/locations/?dimension=C-137")
+                        .expect(200)
+                        .then(({ body: { locations } }) => {
+                            expect(Array.isArray(locations)).toBe(true);
+                            locations.forEach((location) => {
+                                expect(location.dimension).toBe('C-137');
                             });
                         });
                 });
