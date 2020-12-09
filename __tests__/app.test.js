@@ -258,6 +258,22 @@ describe("app", () => {
                             expect(locations).toHaveLength(20);
                         });
                 });
+                it("status 200: responds with the correct keys", () => {
+                    return request(app)
+                        .get("/api/locations")
+                        .expect(200)
+                        .then(({ body: { locations } }) => {
+                            // console.log(locations, "LOCATIONS IN TESTS")
+                            locations.forEach((location) => {
+                                expect(location).toHaveProperty("location_id");
+                                expect(location).toHaveProperty("name");
+                                expect(location).toHaveProperty("type");
+                                expect(location).toHaveProperty("dimension");
+                                expect(location).toHaveProperty("url");
+                                expect(location).toHaveProperty("created_at");
+                            });
+                        });
+                });
             })
         })
     });
