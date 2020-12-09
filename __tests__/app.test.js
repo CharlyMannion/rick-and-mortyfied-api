@@ -92,14 +92,6 @@ describe("app", () => {
                             expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Episode Not Found!");
                         });
                 });
-                it("status 404: NOT FOUND responds with an error when number of episode in query does not exist", () => {
-                    return request(app)
-                        .get("/api/episodes/?number=999")
-                        .expect(404)
-                        .then((response) => {
-                            expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Episode Not Found!");
-                        });
-                });
                 it("status 400: BAD REQUEST responds with an error if query is invalid", () => {
                     return request(app)
                         .get("/api/episodes/?nombre=999")
@@ -308,9 +300,25 @@ describe("app", () => {
                             });
                         });
                 });
-                it("status 404: NOT FOUND responds with an error when name of episode in query does not exist", () => {
+                it("status 404: NOT FOUND responds with an error when name of location in query does not exist", () => {
                     return request(app)
                         .get("/api/locations/?name=wrong")
+                        .expect(404)
+                        .then((response) => {
+                            expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Location Not Found!");
+                        });
+                });
+                it("status 404: NOT FOUND responds with an error when type of location in query does not exist", () => {
+                    return request(app)
+                        .get("/api/locations/?type=wrong")
+                        .expect(404)
+                        .then((response) => {
+                            expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Location Not Found!");
+                        });
+                });
+                it("status 404: NOT FOUND responds with an error when dimension of location in query does not exist", () => {
+                    return request(app)
+                        .get("/api/locations/?dimension=wrong")
                         .expect(404)
                         .then((response) => {
                             expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Location Not Found!");
