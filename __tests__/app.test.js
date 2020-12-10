@@ -521,6 +521,42 @@ describe("app", () => {
                             });
                         });
                 });
+                it("status 200: responds with an array of characters matching the name specified in the request query", () => {
+                    return request(app)
+                        .get("/api/characters/?status=Alive")
+                        .expect(200)
+                        .then(({ body: { characters } }) => {
+                            expect(Array.isArray(characters)).toBe(true);
+                            characters.forEach((character) => {
+                                expect(character.status).toBe('Alive');
+                                expect(character.status).not.toBe('Dead');
+                            });
+                        });
+                });
+                it("status 200: responds with an array of characters matching the name specified in the request query", () => {
+                    return request(app)
+                        .get("/api/characters/?species=Human")
+                        .expect(200)
+                        .then(({ body: { characters } }) => {
+                            expect(Array.isArray(characters)).toBe(true);
+                            characters.forEach((character) => {
+                                expect(character.species).toBe('Human');
+                                expect(character.species).not.toBe('Alien');
+                            });
+                        });
+                });
+                it("status 200: responds with an array of characters matching the name specified in the request query", () => {
+                    return request(app)
+                        .get("/api/characters/?gender=Female")
+                        .expect(200)
+                        .then(({ body: { characters } }) => {
+                            expect(Array.isArray(characters)).toBe(true);
+                            characters.forEach((character) => {
+                                expect(character.gender).toBe('Female');
+                                expect(character.gender).not.toBe('Male');
+                            });
+                        });
+                });
                 // {
                 //     character_id: 17,
                 //     name: 'Annie',
