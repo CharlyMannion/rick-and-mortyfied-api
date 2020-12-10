@@ -700,6 +700,20 @@ describe("app", () => {
                         });
                 });
             });
+            describe("INVALID METHODS", () => {
+                it("status 405: for invalid methods POST, DELETE and PUT", () => {
+                    const invalidMethods = ["post", "delete", "put"];
+
+                    const promises = invalidMethods.map((method) => {
+                        return request(app)[method]("/api/characters/1")
+                            .expect(405)
+                            .then(({ body: { msg } }) => {
+                                expect(msg).toBe("Nah Pal, Method Not Allowed!");
+                            });
+                    });
+                    return Promise.all(promises);
+                });
+            });
         });
     });
 });
