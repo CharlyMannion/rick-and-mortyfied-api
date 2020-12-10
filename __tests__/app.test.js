@@ -589,6 +589,28 @@ describe("app", () => {
                             expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Character Not Found!");
                         });
                 });
+                it("status 400: BAD REQUEST responds with an error if query is invalid", () => {
+                    return request(app)
+                        .get("/api/characters/?nombre=999")
+                        .expect(404)
+                        .then((response) => {
+                            expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Character Not Found!");
+                        });
+                });
+            });
+            describe("INVALID METHODS", () => {
+                it("status 405: for invalid methods DELETE, PATCH and PUT", () => {
+                    const invalidMethods = ["delete", "patch", "put"];
+
+                    const promises = invalidMethods.map((method) => {
+                        return request(app)[method]("/api/characters")
+                            .expect(405)
+                            .then(({ body: { msg } }) => {
+                                expect(msg).toBe("Nah Pal, Method Not Allowed!");
+                            });
+                    });
+                    return Promise.all(promises);
+                });
             });
         });
     });
