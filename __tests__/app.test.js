@@ -494,7 +494,7 @@ describe("app", () => {
                         .get("/api/characters")
                         .expect(200)
                         .then(({ body: { characters } }) => {
-                            console.log(characters, "characters IN TESTS")
+                            // console.log(characters, "characters IN TESTS")
                             characters.forEach((character) => {
                                 expect(character).toHaveProperty("character_id");
                                 expect(character).toHaveProperty("name");
@@ -509,6 +509,31 @@ describe("app", () => {
                             });
                         });
                 });
+                it("status 200: responds with an array of characters matching the name specified in the request query", () => {
+                    return request(app)
+                        .get("/api/characters/?name=Annie")
+                        .expect(200)
+                        .then(({ body: { characters } }) => {
+                            expect(Array.isArray(characters)).toBe(true);
+                            characters.forEach((character) => {
+                                expect(character.name).toBe('Annie');
+                                expect(character.gender).toBe('Female');
+                            });
+                        });
+                });
+                // {
+                //     character_id: 17,
+                //     name: 'Annie',
+                //     status: 'Alive',
+                //     species: 'Human',
+                //     type: '',
+                //     gender: 'Female',
+                //     origin: 'Earth (C-137)',
+                //     location: 'Anatomy Park',
+                //     image: 'https://rickandmortyapi.com/api/character/avatar/17.jpeg',
+                //     url: 'https://rickandmortyapi.com/api/character/17',
+                //     created_at: '2020-12-10T13:01:03.255Z'
+                //   },
             });
         });
     });
