@@ -2,7 +2,7 @@ const connection = require("../db/connection");
 const { checkValid } = require('../db/utils/modelUtils');
 
 exports.fetchCharacters = (queryKey, sentName, sentStatus, sentSpecies, sentGender) => {
-    const validKeys = ['name'];
+    const validKeys = ['name', 'status', 'species', 'gender'];
     return connection
         .select("characters.*")
         .from("characters")
@@ -20,4 +20,11 @@ exports.fetchCharacters = (queryKey, sentName, sentStatus, sentSpecies, sentGend
                 knex.where("characters.gender", sentGender);
             }
         })
+        .then((characters) => {
+            if (characters.length === 0 || checkValid(validKeys, queryKey) === false) return Promise.reject({
+                status: 404,
+                msg: "Sorry Pal, That Query Was Funky. Character Not Found!",
+            });
+            return characters;
+        });
 }

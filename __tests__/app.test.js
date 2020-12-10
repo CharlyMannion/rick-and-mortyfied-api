@@ -521,7 +521,7 @@ describe("app", () => {
                             });
                         });
                 });
-                it("status 200: responds with an array of characters matching the name specified in the request query", () => {
+                it("status 200: responds with an array of characters matching the status specified in the request query", () => {
                     return request(app)
                         .get("/api/characters/?status=Alive")
                         .expect(200)
@@ -533,7 +533,7 @@ describe("app", () => {
                             });
                         });
                 });
-                it("status 200: responds with an array of characters matching the name specified in the request query", () => {
+                it("status 200: responds with an array of characters matching the species specified in the request query", () => {
                     return request(app)
                         .get("/api/characters/?species=Human")
                         .expect(200)
@@ -545,7 +545,7 @@ describe("app", () => {
                             });
                         });
                 });
-                it("status 200: responds with an array of characters matching the name specified in the request query", () => {
+                it("status 200: responds with an array of characters matching the gender specified in the request query", () => {
                     return request(app)
                         .get("/api/characters/?gender=Female")
                         .expect(200)
@@ -557,19 +557,38 @@ describe("app", () => {
                             });
                         });
                 });
-                // {
-                //     character_id: 17,
-                //     name: 'Annie',
-                //     status: 'Alive',
-                //     species: 'Human',
-                //     type: '',
-                //     gender: 'Female',
-                //     origin: 'Earth (C-137)',
-                //     location: 'Anatomy Park',
-                //     image: 'https://rickandmortyapi.com/api/character/avatar/17.jpeg',
-                //     url: 'https://rickandmortyapi.com/api/character/17',
-                //     created_at: '2020-12-10T13:01:03.255Z'
-                //   },
+                it("status 404: NOT FOUND responds with an error when name of location in query does not exist", () => {
+                    return request(app)
+                        .get("/api/characters/?name=wrong")
+                        .expect(404)
+                        .then((response) => {
+                            expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Character Not Found!");
+                        });
+                });
+                it("status 404: NOT FOUND responds with an error when status of location in query does not exist", () => {
+                    return request(app)
+                        .get("/api/characters/?status=wrong")
+                        .expect(404)
+                        .then((response) => {
+                            expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Character Not Found!");
+                        });
+                });
+                it("status 404: NOT FOUND responds with an error when species of location in query does not exist", () => {
+                    return request(app)
+                        .get("/api/characters/?species=wrong")
+                        .expect(404)
+                        .then((response) => {
+                            expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Character Not Found!");
+                        });
+                });
+                it("status 404: NOT FOUND responds with an error when gender of location in query does not exist", () => {
+                    return request(app)
+                        .get("/api/characters/?gender=wrong")
+                        .expect(404)
+                        .then((response) => {
+                            expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Character Not Found!");
+                        });
+                });
             });
         });
     });
