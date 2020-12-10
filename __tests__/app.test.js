@@ -107,13 +107,6 @@ describe("app", () => {
                             expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Episode Not Found!");
                         });
                 });
-                it("status 404: NOT FOUND no episode is sent back if the queried name does not exist, but the query is potentially valid", () => {
-                    return request(app)
-                        .get("/api/episodes/?name=Charly")
-                        .then((response) => {
-                            expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Episode Not Found!");
-                        });
-                });
             });
             describe("POST", () => {
                 it("status 201: responds with 201 for a successfully posted episode", () => {
@@ -328,27 +321,6 @@ describe("app", () => {
                     return request(app)
                         .get("/api/locations/?nombre=999")
                         .expect(404)
-                        .then((response) => {
-                            expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Location Not Found!");
-                        });
-                });
-                it("status 404: NOT FOUND no location is sent back if the queried type does not exist, but the query is potentially valid", () => {
-                    return request(app)
-                        .get("/api/locations/?type=Charly")
-                        .then((response) => {
-                            expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Location Not Found!");
-                        });
-                });
-                it("status 404: NOT FOUND no location is sent back if the queried name does not exist, but the query is potentially valid", () => {
-                    return request(app)
-                        .get("/api/locations/?name=Charly")
-                        .then((response) => {
-                            expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Location Not Found!");
-                        });
-                });
-                it("status 404: NOT FOUND no location is sent back if the queried dimension does not exist, but the query is potentially valid", () => {
-                    return request(app)
-                        .get("/api/locations/?dimension=Charly")
                         .then((response) => {
                             expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Location Not Found!");
                         });
