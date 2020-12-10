@@ -1,4 +1,4 @@
-const { fetchCharacters, insertCharacter } = require('../models/characters.models');
+const { fetchCharacters, insertCharacter, fetchCharacterById } = require('../models/characters.models');
 
 exports.getCharacters = (req, res, next) => {
     const { query: { name, status, species, gender } } = req;
@@ -19,6 +19,17 @@ exports.postCharacters = (req, res, next) => {
     insertCharacter(newCharacterr)
         .then(([character]) => {
             res.status(201).send({ character });
+        })
+        .catch((err) => {
+            next(err);
+        })
+};
+
+exports.getCharacterById = (req, res, next) => {
+    const { character_id } = req.params;
+    fetchCharacterById(character_id)
+        .then((characters) => {
+            res.status(200).send({ characters })
         })
         .catch((err) => {
             next(err);

@@ -660,5 +660,46 @@ describe("app", () => {
                 return Promise.all(promises);
             });
         });
+        describe("/characters/:character_id", () => {
+            describe("GET", () => {
+                it("status 200: responds with status 200 when a character id is given", () => {
+                    return request(app).get("/api/characters/1").expect(200);
+                });
+                it("status 200: responds with an array containing an character when an character id is given", () => {
+                    return request(app)
+                        .get("/api/characters/17")
+                        .expect(200)
+                        .then((response) => {
+                            expect(response.body.characters[0].character_id).toEqual(17);
+                            expect(response.body.characters[0].name).toEqual("Annie");
+                            expect(response.body.characters[0].status).toEqual('Alive');
+                            expect(response.body.characters[0].species).toEqual('Human');
+                            expect(response.body.characters[0].type).toEqual('');
+                            expect(response.body.characters[0].gender).toEqual('Female');
+                            expect(response.body.characters[0].location).toEqual("Anatomy Park");
+                            expect(response.body.characters[0].image).toEqual("https://rickandmortyapi.com/api/character/avatar/17.jpeg");
+                            expect(response.body.characters[0].url).toEqual(
+                                "https://rickandmortyapi.com/api/character/17"
+                            );
+                        });
+                });
+                it("status 404: NOT FOUND -> responds with an error message if the requested character does not exist", () => {
+                    return request(app)
+                        .get("/api/characters/999")
+                        .expect(404)
+                        .then((response) => {
+                            expect(response.body.msg).toBe("Sorry Pal, Character Not Found!");
+                        });
+                });
+                it("status 400: BAD REQUEST -> responds with an error message if the character_id is invalid", () => {
+                    return request(app)
+                        .get("/api/characters/notAnId")
+                        .expect(400)
+                        .then((response) => {
+                            expect(response.body.msg).toBe("No Can Do Pal, Bad Request!");
+                        });
+                });
+            });
+        });
     });
 });

@@ -32,3 +32,18 @@ exports.fetchCharacters = (queryKey, sentName, sentStatus, sentSpecies, sentGend
 exports.insertCharacter = (characterBody) => {
     return connection("characters").insert(characterBody).returning("*");
 };
+
+exports.fetchCharacterById = (sentCharacterId) => {
+    return connection
+        .select("characters.*")
+        .from("characters")
+        .where("characters.character_id", sentCharacterId)
+        .then((character) => {
+            if (character.length < 1)
+                return Promise.reject({
+                    status: 404,
+                    msg: "Sorry Pal, Character Not Found!",
+                });
+            return character;
+        });
+};
