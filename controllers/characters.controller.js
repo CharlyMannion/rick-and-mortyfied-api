@@ -1,4 +1,4 @@
-const { fetchCharacters } = require('../models/characters.models');
+const { fetchCharacters, insertCharacter } = require('../models/characters.models');
 
 exports.getCharacters = (req, res, next) => {
     const { query: { name, status, species, gender } } = req;
@@ -12,3 +12,15 @@ exports.getCharacters = (req, res, next) => {
             next(err);
         })
 }
+
+exports.postCharacters = (req, res, next) => {
+    const { name, status, species, type, gender, origin, location, image, url } = req.body;
+    const newCharacterr = { name: name, status: status, species: species, type: type, gender: gender, origin: origin, location: location, image: image, url: url };
+    insertCharacter(newCharacterr)
+        .then(([character]) => {
+            res.status(201).send({ character });
+        })
+        .catch((err) => {
+            next(err);
+        })
+};

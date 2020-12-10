@@ -28,3 +28,7 @@ exports.fetchCharacters = (queryKey, sentName, sentStatus, sentSpecies, sentGend
             return characters;
         });
 }
+
+exports.insertCharacter = (characterBody) => {
+    return connection("characters").insert(characterBody).returning("*");
+};

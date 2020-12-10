@@ -529,7 +529,7 @@ describe("app", () => {
                             });
                         });
                 });
-                it("status 404: NOT FOUND responds with an error when name of location in query does not exist", () => {
+                it("status 404: NOT FOUND responds with an error when name of character in query does not exist", () => {
                     return request(app)
                         .get("/api/characters/?name=wrong")
                         .expect(404)
@@ -537,7 +537,7 @@ describe("app", () => {
                             expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Character Not Found!");
                         });
                 });
-                it("status 404: NOT FOUND responds with an error when status of location in query does not exist", () => {
+                it("status 404: NOT FOUND responds with an error when status of character in query does not exist", () => {
                     return request(app)
                         .get("/api/characters/?status=wrong")
                         .expect(404)
@@ -545,7 +545,7 @@ describe("app", () => {
                             expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Character Not Found!");
                         });
                 });
-                it("status 404: NOT FOUND responds with an error when species of location in query does not exist", () => {
+                it("status 404: NOT FOUND responds with an error when species of character in query does not exist", () => {
                     return request(app)
                         .get("/api/characters/?species=wrong")
                         .expect(404)
@@ -553,7 +553,7 @@ describe("app", () => {
                             expect(response.body.msg).toBe("Sorry Pal, That Query Was Funky. Character Not Found!");
                         });
                 });
-                it("status 404: NOT FOUND responds with an error when gender of location in query does not exist", () => {
+                it("status 404: NOT FOUND responds with an error when gender of character in query does not exist", () => {
                     return request(app)
                         .get("/api/characters/?gender=wrong")
                         .expect(404)
@@ -570,19 +570,94 @@ describe("app", () => {
                         });
                 });
             });
-            describe("INVALID METHODS", () => {
-                it("status 405: for invalid methods DELETE, PATCH and PUT", () => {
-                    const invalidMethods = ["delete", "patch", "put"];
-
-                    const promises = invalidMethods.map((method) => {
-                        return request(app)[method]("/api/characters")
-                            .expect(405)
-                            .then(({ body: { msg } }) => {
-                                expect(msg).toBe("Nah Pal, Method Not Allowed!");
-                            });
-                    });
-                    return Promise.all(promises);
+            describe("POST", () => {
+                it("status 201: responds with 201 for a successfully posted character", () => {
+                    return request(app)
+                        .post("/api/characters")
+                        .send({
+                            name: "Charly",
+                            status: "Alive",
+                            species: "Human",
+                            type: "",
+                            gender: "Female",
+                            origin: "Earth (C-137)",
+                            location: "Earth (C-137)",
+                            image: "https://scontent-lht6-1.xx.fbcdn.net/v/t1.0-9/16299_10152453068786263_5662911967803183478_n.jpg?_nc_cat=106&ccb=2&_nc_sid=09cbfe&_nc_ohc=bkHeoWVGZpkAX97ltPu&_nc_ht=scontent-lht6-1.xx&oh=78a91e88f90e091d2014292715316b90&oe=5FF6EA72",
+                            url: "https://rickandmortyapi.com/api/character/21",
+                        })
+                        .expect(201);
                 });
+                it("status 201: responds with the successfully posted character", () => {
+                    return request(app)
+                        .post("/api/characters")
+                        .send({
+                            name: "Charly",
+                            status: "Alive",
+                            species: "Human",
+                            type: "",
+                            gender: "Female",
+                            origin: "Earth (C-137)",
+                            location: "Earth (C-137)",
+                            image: "https://scontent-lht6-1.xx.fbcdn.net/v/t1.0-9/16299_10152453068786263_5662911967803183478_n.jpg?_nc_cat=106&ccb=2&_nc_sid=09cbfe&_nc_ohc=bkHeoWVGZpkAX97ltPu&_nc_ht=scontent-lht6-1.xx&oh=78a91e88f90e091d2014292715316b90&oe=5FF6EA72",
+                            url: "https://rickandmortyapi.com/api/character/21",
+                        })
+                        .expect(201)
+                        .then(({ body }) => {
+                            expect(body.character.name).toBe("Charly");
+                            expect(body.character).toHaveProperty("character_id");
+                            expect(body.character).toHaveProperty("name");
+                            expect(body.character).toHaveProperty("status");
+                            expect(body.character).toHaveProperty("species");
+                            expect(body.character).toHaveProperty("type");
+                            expect(body.character).toHaveProperty("gender");
+                            expect(body.character).toHaveProperty("location");
+                            expect(body.character).toHaveProperty("image");
+                            expect(body.character).toHaveProperty("url");
+                            expect(body.character).toHaveProperty("created_at");
+                        });
+                });
+                it("status 400: BAD REQUEST -> malformed body/ missing fields responds with an error message", () => {
+                    return request(app)
+                        .post("/api/characters")
+                        .send({})
+                        .expect(400)
+                        .then(({ body: { msg } }) => {
+                            expect(msg).toBe("No Can Do Pal, Bad Request. Fix Ya Body!");
+                        });
+                });
+                it("status 400: BAD REQUEST -> responds with an error message if request fails schema validation", () => {
+                    return request(app)
+                        .post("/api/characters")
+                        .send({
+                            name: "",
+                            status: "",
+                            species: "",
+                            type: "",
+                            gender: null,
+                            origin: null,
+                            location: null,
+                            image: null,
+                            url: null,
+                        })
+                        .expect(400)
+                        .then(({ body: { msg } }) => {
+                            expect(msg).toBe("No Can Do Pal, Bad Request. Fix Ya Body!");
+                        });
+                });
+            });
+        });
+        describe("INVALID METHODS", () => {
+            it("status 405: for invalid methods DELETE, PATCH and PUT", () => {
+                const invalidMethods = ["delete", "patch", "put"];
+
+                const promises = invalidMethods.map((method) => {
+                    return request(app)[method]("/api/characters")
+                        .expect(405)
+                        .then(({ body: { msg } }) => {
+                            expect(msg).toBe("Nah Pal, Method Not Allowed!");
+                        });
+                });
+                return Promise.all(promises);
             });
         });
     });
