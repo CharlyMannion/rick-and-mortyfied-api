@@ -255,7 +255,7 @@ describe("app", () => {
                         .get("/api/locations")
                         .expect(200)
                         .then(({ body: { locations } }) => {
-                            console.log(locations, "LOCATIONS IN TESTS")
+                            // console.log(locations, "LOCATIONS IN TESTS")
                             locations.forEach((location) => {
                                 expect(location).toHaveProperty("location_id");
                                 expect(location).toHaveProperty("name");
@@ -487,6 +487,26 @@ describe("app", () => {
                         .then(({ body: { characters } }) => {
                             expect(Array.isArray(characters)).toBe(true);
                             expect(characters).toHaveLength(20);
+                        });
+                });
+                it("status 200: responds with the correct keys", () => {
+                    return request(app)
+                        .get("/api/characters")
+                        .expect(200)
+                        .then(({ body: { characters } }) => {
+                            console.log(characters, "characters IN TESTS")
+                            characters.forEach((character) => {
+                                expect(character).toHaveProperty("character_id");
+                                expect(character).toHaveProperty("name");
+                                expect(character).toHaveProperty("status");
+                                expect(character).toHaveProperty("species");
+                                expect(character).toHaveProperty("type");
+                                expect(character).toHaveProperty("gender");
+                                expect(character).toHaveProperty("location");
+                                expect(character).toHaveProperty("image");
+                                expect(character).toHaveProperty("url");
+                                expect(character).toHaveProperty("created_at");
+                            });
                         });
                 });
             });

@@ -4,6 +4,5 @@ exports.getCharacters = (req, res, next) => {
     fetchCharacters()
         .then((characters => {
             res.status(200).send({ characters })
-
         }))
 }
