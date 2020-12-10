@@ -1,3 +1,9 @@
+const { fetchCharacters } = require('../models/characters.models');
+
 exports.getCharacters = (req, res, next) => {
-    res.status(200).send('sending character from controller')
+    fetchCharacters()
+        .then((characters => {
+            res.status(200).send({ characters })
+
+        }))
 }

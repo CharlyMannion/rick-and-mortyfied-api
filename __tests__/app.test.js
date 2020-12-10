@@ -480,6 +480,15 @@ describe("app", () => {
                 it("status 200: responds with status 200", () => {
                     return request(app).get("/api/characters").expect(200);
                 });
+                it("status 200: responds with an array", () => {
+                    return request(app)
+                        .get("/api/characters")
+                        .expect(200)
+                        .then(({ body: { characters } }) => {
+                            expect(Array.isArray(characters)).toBe(true);
+                            expect(characters).toHaveLength(20);
+                        });
+                });
             });
         });
     });
