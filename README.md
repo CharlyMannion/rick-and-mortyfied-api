@@ -204,34 +204,158 @@ GET /api/locations/?dimension=C-137
 ```
 GET /api/characters
 ```
+#### Responds with
+
+- an array of character objects, each of which should have the following properties:
+  - character_id 
+  - name
+  - status
+  - species
+  - type 
+  - gender 
+  - origin
+  - location
+  - image
+  - url
+  - created_at
+
+---
 
 ```
 GET /api/characters/:character_id
 ```
+#### Responds with
+
+- a character objects, which should have the following properties:
+  - character_id 
+  - name
+  - status
+  - species
+  - type 
+  - gender 
+  - origin
+  - location
+  - image
+  - url
+  - created_at
+
+---
 
 ```
 POST /api/characters/:character_id
 ```
+#### Request body accepts
+
+- an object with the following properties:
+  - name
+  - status
+  - species
+  - type 
+  - gender 
+  - origin
+  - location
+  - image
+  - url
+
+#### Responds with
+
+- the posted character
+
+---
 
 ```
 PATCH /api/characters/:character_id
 ```
+#### Request body accepts
+
+- an object in the form {location: "https://rickandmortyapi.com/api/location/1"}
+  - this will update the current location of the character
+
+#### Responds with
+
+- the updated character
+
+---
 
 ```
 GET /api/characters/?name=rick
 ```
+#### Responds with
+
+- a character object, filtered by name, which should have the following properties:
+  - character_id 
+  - name
+  - status
+  - species
+  - type 
+  - gender 
+  - origin
+  - location
+  - image
+  - url
+  - created_at
+
+---
 
 ```
 GET /api/characters/?status=dead
 ```
+#### Responds with
+
+- a character object, filtered by status, which should have the following properties:
+  - character_id 
+  - name
+  - status
+  - species
+  - type 
+  - gender 
+  - origin
+  - location
+  - image
+  - url
+  - created_at
+
+---
 
 ```
 GET /api/characters/?species=human
 ```
+#### Responds with
+
+- a character object, filtered by species, which should have the following properties:
+  - character_id 
+  - name
+  - status
+  - species
+  - type 
+  - gender 
+  - origin
+  - location
+  - image
+  - url
+  - created_at
+
+---
 
 ```
 GET /api/characters/?gender=female
 ```
+#### Responds with
+
+- a character object, filtered by gender, which should have the following properties:
+  - character_id 
+  - name
+  - status
+  - species
+  - type 
+  - gender 
+  - origin
+  - location
+  - image
+  - url
+  - created_at
+
+---
 
 
 ```
