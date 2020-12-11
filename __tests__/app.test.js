@@ -705,7 +705,6 @@ describe("app", () => {
                     return request(app).patch('/api/characters/1').send({ location: "Anatomy Park" }).expect(200);
                 });
                 it('status 200: responds with the specified article', () => {
-                    const newLocation = "Anatomy Park";
                     return request(app)
                         .patch('/api/characters/1')
                         .send({ location: "Anatomy Park" })
@@ -715,7 +714,6 @@ describe("app", () => {
                         })
                 });
                 it('status 200: responds with the specified article', () => {
-                    const newLocation = "Anatomy Park";
                     return request(app)
                         .patch('/api/characters/1')
                         .send({ location: "Anatomy Park" })
@@ -723,6 +721,15 @@ describe("app", () => {
                         .then(({ body }) => {
                             expect(body.character.location).toBe("Anatomy Park");
                         })
+                });
+                it('status 404: NOT FOUND responds with an error message if the requested character does not exist', () => {
+                    return request(app)
+                        .patch('/api/characters/9999')
+                        .send({ location: "Anatomy Park" })
+                        .expect(404)
+                        .then((response) => {
+                            expect(response.body.msg).toBe('Sorry Pal, Character Not Found!')
+                        });
                 });
             })
             describe("INVALID METHODS", () => {

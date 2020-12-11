@@ -60,7 +60,11 @@ exports.updateCharacter = (patchCharacterId, sentLocation) => {
                 .from("characters")
                 .where("characters.character_id", patchCharacterId)
                 .then((character) => {
-                    // console.log(character[0].location, "<=========== character[0] IN MODEL");
+                    if (character.length < 1)
+                        return Promise.reject({
+                            status: 404,
+                            msg: "Sorry Pal, Character Not Found!",
+                        });
                     return character;
                 });
         });
