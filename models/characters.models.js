@@ -47,3 +47,21 @@ exports.fetchCharacterById = (sentCharacterId) => {
             return character;
         });
 };
+
+exports.updateCharacter = (patchCharacterId, sentLocation) => {
+    return connection
+        .select("characters.*")
+        .from("characters")
+        .where("characters.character_id", patchCharacterId)
+        .update("location", sentLocation)
+        .then(() => {
+            return connection
+                .select("characters.*")
+                .from("characters")
+                .where("characters.character_id", patchCharacterId)
+                .then((character) => {
+                    console.log(character[0].location, "<=========== character[0] IN MODEL");
+                    return character[0];
+                });
+        });
+};

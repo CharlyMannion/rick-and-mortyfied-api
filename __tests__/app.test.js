@@ -702,7 +702,17 @@ describe("app", () => {
             });
             describe("PATCH", () => {
                 it('status 200: responds with status 200', () => {
-                    return request(app).patch('/api/characters/1').expect(200);
+                    return request(app).patch('/api/characters/1').send({ location: "Anatomy Park" }).expect(200);
+                });
+                it('status 200: responds with the specified article', () => {
+                    const newLocation = "Anatomy Park";
+                    return request(app)
+                        .patch('/api/characters/1')
+                        .send({ location: "Anatomy Park" })
+                        .expect(200)
+                        .then(({ body }) => {
+                            expect(body.character.character_id).toBe(1);
+                        })
                 });
             })
             describe("INVALID METHODS", () => {

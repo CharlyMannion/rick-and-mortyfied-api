@@ -268,7 +268,7 @@ PATCH /api/characters/:character_id
 ```
 #### Request body accepts
 
-- an object in the form {location: "https://rickandmortyapi.com/api/location/1"}
+- an object in the form {location: "Anatomy Park"}
   - this will update the current location of the character
 
 #### Responds with

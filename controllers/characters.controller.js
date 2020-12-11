@@ -1,4 +1,4 @@
-const { fetchCharacters, insertCharacter, fetchCharacterById } = require('../models/characters.models');
+const { fetchCharacters, insertCharacter, fetchCharacterById, updateCharacter } = require('../models/characters.models');
 
 exports.getCharacters = (req, res, next) => {
     const { query: { name, status, species, gender } } = req;
@@ -37,5 +37,14 @@ exports.getCharacterById = (req, res, next) => {
 };
 
 exports.patchCharacterById = (req, res, next) => {
-    res.status(200).send("there will be patching");
+    const { character_id } = req.params;
+    const { location } = req.body;
+    // console.log(req.body, "NEW LOC")
+    updateCharacter(character_id, location)
+        .then((character) => {
+            res.status(200).send({ character });
+        })
+        .catch((err) => {
+            next(err);
+        });
 }
