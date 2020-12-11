@@ -41,7 +41,7 @@ exports.patchCharacterById = (req, res, next) => {
     const { location } = req.body;
     // console.log(req.body, "NEW LOC")
     updateCharacter(character_id, location)
-        .then((character) => {
+        .then(([character]) => {
             res.status(200).send({ character });
         })
         .catch((err) => {

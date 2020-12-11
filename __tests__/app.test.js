@@ -714,6 +714,16 @@ describe("app", () => {
                             expect(body.character.character_id).toBe(1);
                         })
                 });
+                it('status 200: responds with the specified article', () => {
+                    const newLocation = "Anatomy Park";
+                    return request(app)
+                        .patch('/api/characters/1')
+                        .send({ location: "Anatomy Park" })
+                        .expect(200)
+                        .then(({ body }) => {
+                            expect(body.character.location).toBe("Anatomy Park");
+                        })
+                });
             })
             describe("INVALID METHODS", () => {
                 it("status 405: for invalid methods POST, DELETE and PUT", () => {

@@ -60,8 +60,8 @@ exports.updateCharacter = (patchCharacterId, sentLocation) => {
                 .from("characters")
                 .where("characters.character_id", patchCharacterId)
                 .then((character) => {
-                    console.log(character[0].location, "<=========== character[0] IN MODEL");
-                    return character[0];
+                    // console.log(character[0].location, "<=========== character[0] IN MODEL");
+                    return character;
                 });
         });
 };
