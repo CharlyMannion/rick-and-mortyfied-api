@@ -700,6 +700,11 @@ describe("app", () => {
                         });
                 });
             });
+            describe("PATCH", () => {
+                it('status 200: responds with status 200', () => {
+                    return request(app).patch('/api/characters/1').expect(200);
+                });
+            })
             describe("INVALID METHODS", () => {
                 it("status 405: for invalid methods POST, DELETE and PUT", () => {
                     const invalidMethods = ["post", "delete", "put"];

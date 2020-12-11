@@ -35,3 +35,7 @@ exports.getCharacterById = (req, res, next) => {
             next(err);
         })
 };
+
+exports.patchCharacterById = (req, res, next) => {
+    res.status(200).send("there will be patching");
+}
