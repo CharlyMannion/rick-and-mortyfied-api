@@ -1,6 +1,7 @@
 // error handling middleware functions (EHMF):
 
 exports.handleCustomErrors = (err, req, res, next) => {
+    // console.log(err.code, "<------------------------ ERROR CODE")
     if (err.status) res.status(err.status).send({ msg: err.msg });
     else next(err);
 };

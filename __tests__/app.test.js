@@ -731,6 +731,35 @@ describe("app", () => {
                             expect(response.body.msg).toBe('Sorry Pal, Character Not Found!')
                         });
                 });
+                it("status 400: BAD REQUEST -> responds with an error message if the character_id is invalid", () => {
+                    return request(app)
+                        .patch("/api/characters/notAnId")
+                        .send({ location: "Anatomy Park" })
+                        .expect(400)
+                        .then((response) => {
+                            expect(response.body.msg).toBe("No Can Do Pal, Bad Request!");
+                        });
+                });
+                it("status 400: BAD REQUEST -> malformed body/ missing fields responds with an error message", () => {
+                    return request(app)
+                        .patch("/api/characters/notAnId")
+                        .send({})
+                        .expect(400)
+                        .then(({ body: { msg } }) => {
+                            expect(msg).toBe("No Can Do Pal, Bad Request. Fix Ya Body!");
+                        });
+                });
+                it("status 400: BAD REQUEST -> responds with an error message if request fails schema validation", () => {
+                    return request(app)
+                        .patch("/api/characters/notAnId")
+                        .send({
+                            location: null,
+                        })
+                        .expect(400)
+                        .then(({ body: { msg } }) => {
+                            expect(msg).toBe("No Can Do Pal, Bad Request!");
+                        });
+                });
             })
             describe("INVALID METHODS", () => {
                 it("status 405: for invalid methods POST, DELETE and PUT", () => {

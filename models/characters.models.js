@@ -49,23 +49,29 @@ exports.fetchCharacterById = (sentCharacterId) => {
 };
 
 exports.updateCharacter = (patchCharacterId, sentLocation) => {
-    return connection
-        .select("characters.*")
-        .from("characters")
-        .where("characters.character_id", patchCharacterId)
-        .update("location", sentLocation)
-        .then(() => {
-            return connection
-                .select("characters.*")
-                .from("characters")
-                .where("characters.character_id", patchCharacterId)
-                .then((character) => {
-                    if (character.length < 1)
-                        return Promise.reject({
-                            status: 404,
-                            msg: "Sorry Pal, Character Not Found!",
-                        });
-                    return character;
-                });
-        });
+    console.log(sentLocation);
+    if (sentLocation === undefined) {
+        return Promise.reject({ status: 400, msg: "No Can Do Pal, Bad Request. Fix Ya Body!" });
+    }
+    if (sentLocation !== 'undefined' || sentLocation) {
+        return connection
+            .select("characters.*")
+            .from("characters")
+            .where("characters.character_id", patchCharacterId)
+            .update("location", sentLocation)
+            .then(() => {
+                return connection
+                    .select("characters.*")
+                    .from("characters")
+                    .where("characters.character_id", patchCharacterId)
+                    .then((character) => {
+                        if (character.length < 1)
+                            return Promise.reject({
+                                status: 404,
+                                msg: "Sorry Pal, Character Not Found!",
+                            });
+                        else return character;
+                    });
+            });
+    }
 };
