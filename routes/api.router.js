@@ -7,7 +7,7 @@ apiRouter.use('/episodes', episodesRouter);
 apiRouter.use('/locations', locationsRouter);
 apiRouter.use('/characters', charactersRouter);
 
-piRouter.get('/', (req, res) => {
+apiRouter.get('/', (req, res) => {
     res.json({
         '/api/episodes': ['GET', 'POST'],
         '/api/episodes/:episode_id': ['GET'],
