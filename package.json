@@ -2,8 +2,9 @@
     "name": "rick-and-mortyfied-api",
     "version": "1.0.0",
     "description": "![The Rick and Mortyfied API](https://repository-images.githubusercontent.com/120371205/b6740400-92d4-11ea-8a13-d5f6e0558e9b)",
-    "main": "knexfile.js",
+    "main": "listen.js",
     "scripts": {
+        "start": "node listen.js",
         "setup-dbs": "psql -f ./db/setup.sql",
         "migrate-make": "knex migrate:make",
         "migrate-rollback": "knex migrate:rollback",
@@ -11,8 +12,10 @@
         "seed": "knex seed:run",
         "test-app": "jest __tests__/app.test.js",
         "test-utils": "jest __tests__/utils.test.js",
-        "test-model-utils": "jest __tests__/modelUtils.test.js"
-
+        "test-model-utils": "jest __tests__/modelUtils.test.js",
+        "seed:prod": "NODE_ENV=production DB_URL=$(heroku config:get DATABASE_URL) knex seed:run",
+        "migrate-latest:prod": "NODE_ENV=production DB_URL=$(heroku config:get DATABASE_URL) knex migrate:latest",
+        "migrate-rollback:prod": "NODE_ENV=production DB_URL=$(heroku config:get DATABASE_URL) knex migrate:rollback"
     },
     "repository": {
         "type": "git",
