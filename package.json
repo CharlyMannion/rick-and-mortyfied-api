@@ -2,7 +2,7 @@
     "name": "rick-and-mortyfied-api",
     "version": "1.0.0",
     "description": "![The Rick and Mortyfied API](https://repository-images.githubusercontent.com/120371205/b6740400-92d4-11ea-8a13-d5f6e0558e9b)",
-    "main": "listen.js",
+    "main": "knexfile.js",
     "scripts": {
         "start": "node listen.js",
         "setup-dbs": "psql -f ./db/setup.sql",
