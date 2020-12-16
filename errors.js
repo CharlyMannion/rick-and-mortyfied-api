@@ -16,10 +16,10 @@ exports.handlePsqlErrors = (err, req, res, next) => {
     else next(err);
 };
 
-exports.handleServerErrors = (err, req, res, next) => {
-    console.log(err);
-    res.status(500).send({ msg: "UHOH Server Error!" });
-};
+// exports.handleServerErrors = (err, req, res, next) => {
+//     console.log(err);
+//     res.status(500).send({ msg: "UHOH Server Error!" });
+// };
 
 // error controllers:
 
@@ -29,4 +29,9 @@ exports.handleInvalidPath = (req, res, next) => {
 
 exports.handle405s = (req, res, next) => {
     res.status(405).send({ msg: "Nah Pal, Method Not Allowed!" });
+};
+
+exports.handleServerErrors = (err, req, res, next) => {
+    console.log(err);
+    res.status(500).send({ msg: "UHOH Server Error!" });
 };
